@@ -1,21 +1,30 @@
-# Personalized Calendar Planner
+# FlowState Planner (Personalized)
 
-A lightweight, user-friendly web app tailored for an MRes student balancing research, classes, sport, and self-study.
+A friendlier, calmer planner for balancing MRes research + classes + sports + personal growth.
 
-## Features
+## What's new
 
-- Preloaded fixed commitments (supervisor meetings, classes, badminton, deep-work blocks).
-- Flexible goal management (e.g., SQL sessions, gym) with frequency, duration, and priority.
-- Auto-scheduling engine that places flexible sessions in available slots.
-- Weekly calendar view with completion checkboxes.
-- Progress tracker (% of flexible tasks completed).
-- Browser notification reminders for upcoming planned sessions.
-- Local persistence via `localStorage`.
+- Human-centered UI refresh (softer visuals, clearer hierarchy, less mechanical feel).
+- Eisenhower Matrix board (Do First / Schedule / Delegate / Eliminate).
+- Add new tasks with deadlines and estimated duration.
+- Smart weekly planner prioritizes deadline-driven matrix tasks first, then recurring goals.
+- Completion tracking + browser reminders.
+- Local storage persistence.
 
 ## Run locally
 
-Open `index.html` directly in your browser.
+1. Open `index.html` directly in browser, or
+2. Use a local server:
+
+```bash
+cd /workspace/John-Calendar
+python3 -m http.server 8000
+```
+
+Open `http://localhost:8000`.
 
 ## Personalization
 
-Edit the `fixedCommitments` and default `goals` arrays in `app.js` to match your life schedule.
+- Update `fixedCommitments` in `app.js`.
+- Add recurring goals in UI.
+- Add one-off tasks in the Eisenhower panel with deadline + urgency/importance.
