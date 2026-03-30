@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personalized Time Planner</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>My Adaptive Study & Life Planner</h1>
+      <p>Auto-schedule your flexible tasks around your fixed commitments.</p>
+    </header>
+
+    <main class="layout">
+      <section class="card">
+        <h2>1) Fixed Weekly Commitments</h2>
+        <ul id="fixedList" class="event-list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>2) Flexible Goals</h2>
+        <form id="goalForm" class="goal-form">
+          <input id="goalName" required placeholder="Task name (e.g., SQL self-study)" />
+          <input id="goalSessions" type="number" min="1" max="14" required placeholder="Sessions / week" />
+          <input id="goalDuration" type="number" min="30" max="240" step="15" required placeholder="Duration per session (minutes)" />
+          <label>
+            Priority
+            <select id="goalPriority">
+              <option value="high">High</option>
+              <option value="medium" selected>Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </label>
+          <button type="submit">Add Goal</button>
+        </form>
+        <ul id="goalList" class="event-list"></ul>
+      </section>
+
+      <section class="card controls">
+        <h2>3) Build This Week Plan</h2>
+        <div class="button-row">
+          <button id="generateBtn">Generate Weekly Plan</button>
+          <button id="resetPlanBtn" class="ghost">Reset Plan</button>
+          <button id="notifyBtn" class="ghost">Enable Reminder Notifications</button>
+        </div>
+        <p class="hint">Planner favors mornings/afternoons for deep work and avoids your existing events.</p>
+      </section>
+
+      <section class="card">
+        <h2>4) Auto-Planned Week</h2>
+        <div id="calendar" class="calendar"></div>
+      </section>
+
+      <section class="card">
+        <h2>5) Progress Tracking</h2>
+        <p id="progressSummary"></p>
+      </section>
+    </main>
+
+    <template id="eventTemplate">
+      <li>
+        <span class="title"></span>
+        <span class="meta"></span>
+      </li>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
