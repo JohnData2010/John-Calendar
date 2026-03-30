@@ -1,20 +1,16 @@
-# FlowState Planner (Personalized)
+# Kanso Planner
 
-A friendlier, calmer planner for balancing MRes research + classes + sports + personal growth.
+A Japanese-minimal weekly planner with Eisenhower Matrix and adaptive schedule generation.
 
-## What's new
+## Improvements in this version
 
-- Human-centered UI refresh (softer visuals, clearer hierarchy, less mechanical feel).
-- Eisenhower Matrix board (Do First / Schedule / Delegate / Eliminate).
-- Add new tasks with deadlines and estimated duration.
-- Smart weekly planner prioritizes deadline-driven matrix tasks first, then recurring goals.
-- Completion tracking + browser reminders.
-- Local storage persistence.
+- Mandatory onboarding asks **wake time** and **sleep time** before users start planning.
+- Fixed commitments are now fully editable in UI (add, edit, delete).
+- UI/theme redesigned with a calm Japanese minimal palette and simple iconography.
+- Scheduler uses your daily rhythm to decide practical planning windows.
+- Matrix + recurring goals + weekly board + reminders + persistence.
 
 ## Run locally
-
-1. Open `index.html` directly in browser, or
-2. Use a local server:
 
 ```bash
 cd /workspace/John-Calendar
@@ -22,9 +18,3 @@ python3 -m http.server 8000
 ```
 
 Open `http://localhost:8000`.
-
-## Personalization
-
-- Update `fixedCommitments` in `app.js`.
-- Add recurring goals in UI.
-- Add one-off tasks in the Eisenhower panel with deadline + urgency/importance.

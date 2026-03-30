@@ -1,38 +1,30 @@
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-const appStateKey = "flowstate_planner_v2";
+const key = "kanso_planner_v3";
 
-const fixedCommitments = [
-  { title: "MRes Deep Work", day: "Monday", start: "09:00", end: "17:00", type: "fixed" },
-  { title: "MRes Deep Work", day: "Tuesday", start: "09:00", end: "17:00", type: "fixed" },
-  { title: "MRes Deep Work", day: "Wednesday", start: "09:00", end: "17:00", type: "fixed" },
-  { title: "MRes Deep Work", day: "Thursday", start: "09:00", end: "17:00", type: "fixed" },
-  { title: "MRes Deep Work", day: "Friday", start: "09:00", end: "17:00", type: "fixed" },
-  { title: "Supervisor Meeting (On Campus)", day: "Thursday", start: "11:00", end: "13:00", type: "fixed" },
-  { title: "Data Analytics Course", day: "Monday", start: "20:00", end: "23:30", type: "fixed" },
-  { title: "Data Analytics Course", day: "Thursday", start: "20:00", end: "23:30", type: "fixed" },
-  { title: "Badminton", day: "Friday", start: "18:00", end: "20:00", type: "fixed" },
-  { title: "Badminton", day: "Saturday", start: "20:00", end: "22:30", type: "fixed" }
-];
+const defaults = {
+  profile: { wakeTime: "07:00", sleepTime: "23:30", ready: false },
+  fixedCommitments: [
+    { id: crypto.randomUUID(), title: "MRes Deep Work", day: "Monday", start: "09:00", end: "17:00", type: "fixed" },
+    { id: crypto.randomUUID(), title: "MRes Deep Work", day: "Tuesday", start: "09:00", end: "17:00", type: "fixed" },
+    { id: crypto.randomUUID(), title: "MRes Deep Work", day: "Wednesday", start: "09:00", end: "17:00", type: "fixed" },
+    { id: crypto.randomUUID(), title: "MRes Deep Work", day: "Thursday", start: "09:00", end: "17:00", type: "fixed" },
+    { id: crypto.randomUUID(), title: "MRes Deep Work", day: "Friday", start: "09:00", end: "17:00", type: "fixed" },
+    { id: crypto.randomUUID(), title: "Supervisor Meeting", day: "Thursday", start: "11:00", end: "13:00", type: "fixed" },
+    { id: crypto.randomUUID(), title: "Data Analytics Course", day: "Monday", start: "20:00", end: "23:30", type: "fixed" },
+    { id: crypto.randomUUID(), title: "Data Analytics Course", day: "Thursday", start: "20:00", end: "23:30", type: "fixed" },
+    { id: crypto.randomUUID(), title: "Badminton", day: "Friday", start: "18:00", end: "20:00", type: "fixed" },
+    { id: crypto.randomUUID(), title: "Badminton", day: "Saturday", start: "20:00", end: "22:30", type: "fixed" }
+  ],
+  goals: [
+    { id: crypto.randomUUID(), name: "SQL Self-Study", sessionsPerWeek: 3, duration: 90, priority: "high" },
+    { id: crypto.randomUUID(), name: "Gym", sessionsPerWeek: 4, duration: 75, priority: "medium" }
+  ],
+  matrixTasks: [],
+  weeklyPlan: []
+};
 
-let goals = [
-  { id: crypto.randomUUID(), name: "SQL Self-Study", sessionsPerWeek: 3, duration: 90, priority: "high" },
-  { id: crypto.randomUUID(), name: "Gym", sessionsPerWeek: 4, duration: 75, priority: "medium" }
-];
-
-let matrixTasks = [
-  {
-    id: crypto.randomUUID(),
-    name: "Prepare supervisor agenda",
-    deadline: "",
-    duration: 60,
-    important: true,
-    urgent: false,
-    completed: false
-  }
-];
-
-let weeklyPlan = [];
-
+let state = structuredClone(defaults);
+let editingFixedId = null;
 loadState();
 
 const fixedListEl = document.getElementById("fixedList");
@@ -46,9 +38,7 @@ function toMinutes(time) {
 }
 
 function minutesToTime(total) {
-  const h = String(Math.floor(total / 60)).padStart(2, "0");
-  const m = String(total % 60).padStart(2, "0");
-  return `${h}:${m}`;
+  return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
 }
 
 function intersects(aStart, aEnd, bStart, bEnd) {
@@ -59,207 +49,203 @@ function priorityWeight(priority) {
   return { high: 3, medium: 2, low: 1 }[priority] ?? 1;
 }
 
-function getDeadlineMs(deadline) {
-  return deadline ? new Date(deadline).getTime() : Number.POSITIVE_INFINITY;
-}
-
-function isUrgentByDeadline(deadline) {
+function urgentByDeadline(deadline) {
   if (!deadline) return false;
-  const diff = getDeadlineMs(deadline) - Date.now();
-  return diff > 0 && diff <= 48 * 60 * 60 * 1000;
+  return new Date(deadline).getTime() - Date.now() <= 48 * 60 * 60 * 1000;
 }
 
-function getQuadrant(task) {
-  const urgent = task.urgent || isUrgentByDeadline(task.deadline);
-  if (urgent && task.important) return "q1";
-  if (!urgent && task.important) return "q2";
-  if (urgent && !task.important) return "q3";
+function quadrant(task) {
+  const urgent = task.urgent || urgentByDeadline(task.deadline);
+  if (task.important && urgent) return "q1";
+  if (task.important) return "q2";
+  if (urgent) return "q3";
   return "q4";
 }
 
-function buildListItem(title, meta) {
-  const tpl = document.getElementById("itemTemplate").content.cloneNode(true);
-  tpl.querySelector(".title").textContent = title;
-  tpl.querySelector(".meta").textContent = meta;
-  return tpl;
+function renderRhythmBadge() {
+  const badge = document.getElementById("rhythmBadge");
+  badge.textContent = `⏰ Rhythm: wake ${state.profile.wakeTime} • sleep ${state.profile.sleepTime}`;
 }
 
 function renderFixed() {
   fixedListEl.innerHTML = "";
-  fixedCommitments
+  state.fixedCommitments
     .slice()
     .sort((a, b) => days.indexOf(a.day) - days.indexOf(b.day) || toMinutes(a.start) - toMinutes(b.start))
-    .forEach((event) => fixedListEl.appendChild(buildListItem(event.title, `${event.day} ${event.start}-${event.end}`)));
+    .forEach((event) => {
+      const tpl = document.getElementById("itemTemplate").content.cloneNode(true);
+      tpl.querySelector(".title").textContent = event.title;
+      tpl.querySelector(".meta").textContent = `${event.day} ${event.start}-${event.end}`;
+      const actions = tpl.querySelector(".item-actions");
+      const editBtn = document.createElement("button");
+      editBtn.className = "ghost";
+      editBtn.textContent = "Edit";
+      editBtn.addEventListener("click", () => fillFixedForm(event));
+
+      const delBtn = document.createElement("button");
+      delBtn.className = "ghost";
+      delBtn.textContent = "Delete";
+      delBtn.addEventListener("click", () => {
+        state.fixedCommitments = state.fixedCommitments.filter((x) => x.id !== event.id);
+        saveState();
+        renderFixed();
+      });
+
+      actions.append(editBtn, delBtn);
+      fixedListEl.appendChild(tpl);
+    });
+}
+
+function fillFixedForm(event) {
+  editingFixedId = event.id;
+  document.getElementById("fixedTitle").value = event.title;
+  document.getElementById("fixedDay").value = event.day;
+  document.getElementById("fixedStart").value = event.start;
+  document.getElementById("fixedEnd").value = event.end;
 }
 
 function renderGoals() {
   goalListEl.innerHTML = "";
-  goals.forEach((goal) => {
-    goalListEl.appendChild(buildListItem(goal.name, `${goal.sessionsPerWeek}x • ${goal.duration}m • ${goal.priority}`));
+  state.goals.forEach((goal) => {
+    const tpl = document.getElementById("itemTemplate").content.cloneNode(true);
+    tpl.querySelector(".title").textContent = goal.name;
+    tpl.querySelector(".meta").textContent = `${goal.sessionsPerWeek}x • ${goal.duration}m • ${goal.priority}`;
+    goalListEl.appendChild(tpl);
   });
 }
 
 function renderMatrix() {
-  document.querySelectorAll(".quad__items").forEach((el) => {
-    el.innerHTML = "";
-  });
-
-  matrixTasks
-    .filter((task) => !task.completed)
-    .sort((a, b) => getDeadlineMs(a.deadline) - getDeadlineMs(b.deadline))
+  document.querySelectorAll(".quad-items").forEach((el) => (el.innerHTML = ""));
+  state.matrixTasks
+    .filter((x) => !x.completed)
+    .sort((a, b) => (a.deadline ? new Date(a.deadline).getTime() : Infinity) - (b.deadline ? new Date(b.deadline).getTime() : Infinity))
     .forEach((task) => {
-      const q = getQuadrant(task);
-      const container = document.querySelector(`.quad__items[data-quad='${q}']`);
       const pill = document.createElement("div");
-      pill.className = "task-pill";
-      const deadlineText = task.deadline ? new Date(task.deadline).toLocaleString() : "No deadline";
-      pill.innerHTML = `<strong>${task.name}</strong><br/><small>${deadlineText} • ${task.duration} min</small>`;
-      container.appendChild(pill);
+      pill.className = "pill";
+      const due = task.deadline ? new Date(task.deadline).toLocaleString() : "No deadline";
+      pill.innerHTML = `<strong>${task.name}</strong><br/><small>${due} • ${task.duration}m</small>`;
+      document.querySelector(`[data-q='${quadrant(task)}']`).appendChild(pill);
     });
 }
 
-function sortedWorkQueue() {
-  const recurring = goals.flatMap((goal) =>
-    Array.from({ length: goal.sessionsPerWeek }, (_, idx) => ({
+function sortedQueue() {
+  const recurring = state.goals.flatMap((g) =>
+    Array.from({ length: g.sessionsPerWeek }, () => ({
       id: crypto.randomUUID(),
-      title: goal.name,
-      type: "flex",
-      source: "goal",
-      duration: goal.duration,
-      priority: priorityWeight(goal.priority),
+      title: g.name,
+      duration: g.duration,
+      priority: priorityWeight(g.priority),
       deadline: "",
-      order: idx
+      source: "goal"
     }))
   );
 
-  const matrixItems = matrixTasks
-    .filter((task) => !task.completed)
+  const matrix = state.matrixTasks
+    .filter((x) => !x.completed)
     .map((task) => ({
       id: crypto.randomUUID(),
       title: task.name,
-      type: "flex",
-      source: "matrix",
       duration: task.duration,
-      priority: getQuadrant(task) === "q1" ? 5 : getQuadrant(task) === "q2" ? 4 : getQuadrant(task) === "q3" ? 2 : 1,
       deadline: task.deadline,
-      matrixTaskId: task.id
+      source: "matrix",
+      matrixTaskId: task.id,
+      priority: quadrant(task) === "q1" ? 5 : quadrant(task) === "q2" ? 4 : quadrant(task) === "q3" ? 2 : 1
     }));
 
-  return [...matrixItems, ...recurring].sort((a, b) => {
-    const deadlineDiff = getDeadlineMs(a.deadline) - getDeadlineMs(b.deadline);
-    if (deadlineDiff !== 0) return deadlineDiff;
+  return [...matrix, ...recurring].sort((a, b) => {
+    const aDeadline = a.deadline ? new Date(a.deadline).getTime() : Infinity;
+    const bDeadline = b.deadline ? new Date(b.deadline).getTime() : Infinity;
+    if (aDeadline !== bDeadline) return aDeadline - bDeadline;
     return b.priority - a.priority;
   });
 }
 
+function preferredSlots() {
+  const wake = toMinutes(state.profile.wakeTime);
+  let sleep = toMinutes(state.profile.sleepTime);
+  if (sleep <= wake) sleep += 24 * 60;
+
+  const morningEnd = Math.min(wake + 120, sleep);
+  const afternoonStart = Math.min(wake + 6 * 60, sleep);
+  const afternoonEnd = Math.min(afternoonStart + 180, sleep);
+  const eveningStart = Math.min(sleep - 210, sleep);
+  const eveningEnd = Math.max(eveningStart + 60, sleep - 30);
+
+  return [
+    [wake, morningEnd],
+    [afternoonStart, afternoonEnd],
+    [eveningStart, eveningEnd]
+  ].filter(([s, e]) => e - s >= 45);
+}
+
 function generatePlan() {
-  const plan = fixedCommitments.map((x) => ({ ...x, completed: false }));
-  const queue = sortedWorkQueue();
-  const preferredSlots = [
-    ["07:00", "08:45"],
-    ["17:30", "19:45"],
-    ["13:30", "16:30"],
-    ["10:00", "12:00"]
-  ];
+  const plan = state.fixedCommitments.map((x) => ({ ...x, completed: false }));
+  const queue = sortedQueue();
+  const slots = preferredSlots();
 
-  for (const work of queue) {
-    const orderedDays = [...days].sort((a, b) => {
-      if (!work.deadline) return 0;
-      const today = new Date();
-      const aDate = dateForWeekday(a, today);
-      const bDate = dateForWeekday(b, today);
-      return Math.abs(getDeadlineMs(work.deadline) - aDate.getTime()) - Math.abs(getDeadlineMs(work.deadline) - bDate.getTime());
-    });
-
+  queue.forEach((work) => {
     let placed = false;
-    for (const day of orderedDays) {
-      for (const [slotStart, slotEnd] of preferredSlots) {
-        const start = toMinutes(slotStart);
+    for (const day of days) {
+      for (const [start, endBoundary] of slots) {
         const end = start + work.duration;
-        if (end > toMinutes(slotEnd)) continue;
-
-        const dayEvents = plan.filter((e) => e.day === day);
-        const hasConflict = dayEvents.some((event) => intersects(start, end, toMinutes(event.start), toMinutes(event.end)));
-        if (hasConflict) continue;
+        if (end > endBoundary) continue;
+        const conflicts = plan
+          .filter((e) => e.day === day)
+          .some((e) => intersects(start, end, toMinutes(e.start), toMinutes(e.end)));
+        if (conflicts) continue;
 
         plan.push({
           id: work.id,
           title: work.title,
           day,
-          start: minutesToTime(start),
-          end: minutesToTime(end),
-          source: work.source,
-          goalId: work.goalId,
-          matrixTaskId: work.matrixTaskId,
+          start: minutesToTime(start % (24 * 60)),
+          end: minutesToTime(end % (24 * 60)),
           type: "flex",
-          completed: false
+          completed: false,
+          matrixTaskId: work.matrixTaskId
         });
-
         placed = true;
         break;
       }
       if (placed) break;
     }
-  }
+  });
 
-  return plan;
-}
-
-function dateForWeekday(weekday, fromDate) {
-  const jsDay = fromDate.getDay();
-  const mondayIndex = (jsDay + 6) % 7;
-  const target = days.indexOf(weekday);
-  const diff = target - mondayIndex;
-  const d = new Date(fromDate);
-  d.setDate(fromDate.getDate() + diff);
-  return d;
+  state.weeklyPlan = plan;
 }
 
 function renderCalendar() {
   calendarEl.innerHTML = "";
-
-  for (const day of days) {
+  days.forEach((day) => {
     const col = document.createElement("div");
     col.className = "day";
     col.innerHTML = `<h3>${day}</h3>`;
-
-    const items = weeklyPlan
-      .filter((event) => event.day === day)
-      .sort((a, b) => toMinutes(a.start) - toMinutes(b.start));
-
-    if (items.length === 0) {
-      const empty = document.createElement("div");
-      empty.className = "slot";
-      empty.textContent = "No tasks";
-      col.appendChild(empty);
+    const events = state.weeklyPlan.filter((x) => x.day === day).sort((a, b) => toMinutes(a.start) - toMinutes(b.start));
+    if (!events.length) {
+      col.innerHTML += `<div class='slot'>No tasks</div>`;
     }
 
-    items.forEach((item) => {
+    events.forEach((event) => {
       const block = document.createElement("article");
-      block.className = `slot ${item.type === "fixed" ? "fixed" : ""}`;
-      const checked = item.completed ? "checked" : "";
-      block.innerHTML = `
-        <strong>${item.title}</strong>
-        <span class="time">${item.start} - ${item.end}</span>
-        ${item.type === "flex" ? `<label><input type="checkbox" data-id="${item.id}" ${checked}/> done</label>` : ""}
-      `;
+      block.className = `slot ${event.type === "fixed" ? "fixed" : ""}`;
+      block.innerHTML = `<strong>${event.title}</strong><span class='time'>${event.start}-${event.end}</span>${
+        event.type === "flex" ? `<label><input type='checkbox' data-id='${event.id}' ${event.completed ? "checked" : ""}/> done</label>` : ""
+      }`;
       col.appendChild(block);
     });
 
     calendarEl.appendChild(col);
-  }
+  });
 
   calendarEl.querySelectorAll("input[type='checkbox']").forEach((cb) => {
     cb.addEventListener("change", (e) => {
-      const target = weeklyPlan.find((x) => x.id === e.target.dataset.id);
-      if (!target) return;
-      target.completed = e.target.checked;
-
-      if (target.matrixTaskId && e.target.checked) {
-        const matrixTask = matrixTasks.find((t) => t.id === target.matrixTaskId);
+      const task = state.weeklyPlan.find((x) => x.id === e.target.dataset.id);
+      if (!task) return;
+      task.completed = e.target.checked;
+      if (task.matrixTaskId && e.target.checked) {
+        const matrixTask = state.matrixTasks.find((m) => m.id === task.matrixTaskId);
         if (matrixTask) matrixTask.completed = true;
       }
-
       saveState();
       renderMatrix();
       renderProgress();
@@ -268,54 +254,99 @@ function renderCalendar() {
 }
 
 function renderProgress() {
-  const flexItems = weeklyPlan.filter((x) => x.type === "flex");
-  const done = flexItems.filter((x) => x.completed).length;
-  const percent = flexItems.length ? Math.round((done / flexItems.length) * 100) : 0;
-  progressSummaryEl.textContent = `Completion this week: ${done}/${flexItems.length} sessions (${percent}%).`;
+  const flex = state.weeklyPlan.filter((x) => x.type === "flex");
+  const done = flex.filter((x) => x.completed).length;
+  const pct = flex.length ? Math.round((done / flex.length) * 100) : 0;
+  progressSummaryEl.textContent = `🍵 Weekly progress: ${done}/${flex.length} (${pct}%)`;
 }
 
 function saveState() {
-  localStorage.setItem(appStateKey, JSON.stringify({ goals, matrixTasks, weeklyPlan }));
+  localStorage.setItem(key, JSON.stringify(state));
 }
 
 function loadState() {
-  const raw = localStorage.getItem(appStateKey);
+  const raw = localStorage.getItem(key);
   if (!raw) return;
   try {
     const parsed = JSON.parse(raw);
-    goals = parsed.goals ?? goals;
-    matrixTasks = parsed.matrixTasks ?? matrixTasks;
-    weeklyPlan = parsed.weeklyPlan ?? [];
+    state = {
+      ...state,
+      ...parsed,
+      fixedCommitments: parsed.fixedCommitments ?? state.fixedCommitments,
+      goals: parsed.goals ?? state.goals,
+      matrixTasks: parsed.matrixTasks ?? state.matrixTasks,
+      weeklyPlan: parsed.weeklyPlan ?? state.weeklyPlan,
+      profile: parsed.profile ?? state.profile
+    };
   } catch {
-    // fallback to defaults
+    // keep defaults
   }
+}
+
+function populateDaySelect() {
+  const select = document.getElementById("fixedDay");
+  select.innerHTML = days.map((d) => `<option value='${d}'>${d}</option>`).join("");
 }
 
 function scheduleReminder() {
   const now = new Date();
-  const today = days[(now.getDay() + 6) % 7];
+  const day = days[(now.getDay() + 6) % 7];
   const nowMin = now.getHours() * 60 + now.getMinutes();
-  const next = weeklyPlan
-    .filter((x) => x.type === "flex" && x.day === today && !x.completed)
+  const next = state.weeklyPlan
+    .filter((x) => x.type === "flex" && !x.completed && x.day === day)
     .map((x) => ({ ...x, mins: toMinutes(x.start) }))
     .filter((x) => x.mins > nowMin)
     .sort((a, b) => a.mins - b.mins)[0];
 
   if (!next) return;
-
   setTimeout(() => {
     if (Notification.permission === "granted") {
-      new Notification(`Next focus block: ${next.title}`, { body: `${next.start} - ${next.end}` });
-    } else {
-      alert(`Next: ${next.title} at ${next.start}`);
+      new Notification(`Upcoming: ${next.title}`, { body: `${next.start}-${next.end}` });
     }
   }, (next.mins - nowMin) * 60 * 1000);
 }
 
-function initEvents() {
+function bindEvents() {
+  document.getElementById("profileForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    state.profile.wakeTime = document.getElementById("wakeTime").value;
+    state.profile.sleepTime = document.getElementById("sleepTime").value;
+    state.profile.ready = true;
+    document.getElementById("onboarding").classList.add("hidden");
+    saveState();
+    renderRhythmBadge();
+  });
+
+  document.getElementById("fixedForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const payload = {
+      id: editingFixedId ?? crypto.randomUUID(),
+      title: document.getElementById("fixedTitle").value.trim(),
+      day: document.getElementById("fixedDay").value,
+      start: document.getElementById("fixedStart").value,
+      end: document.getElementById("fixedEnd").value,
+      type: "fixed"
+    };
+
+    if (toMinutes(payload.end) <= toMinutes(payload.start)) {
+      alert("End time must be after start time.");
+      return;
+    }
+
+    if (editingFixedId) {
+      state.fixedCommitments = state.fixedCommitments.map((x) => (x.id === editingFixedId ? payload : x));
+    } else {
+      state.fixedCommitments.push(payload);
+    }
+    editingFixedId = null;
+    e.target.reset();
+    saveState();
+    renderFixed();
+  });
+
   document.getElementById("goalForm").addEventListener("submit", (e) => {
     e.preventDefault();
-    goals.push({
+    state.goals.push({
       id: crypto.randomUUID(),
       name: document.getElementById("goalName").value.trim(),
       sessionsPerWeek: Number(document.getElementById("goalSessions").value),
@@ -329,7 +360,7 @@ function initEvents() {
 
   document.getElementById("taskForm").addEventListener("submit", (e) => {
     e.preventDefault();
-    matrixTasks.push({
+    state.matrixTasks.push({
       id: crypto.randomUUID(),
       name: document.getElementById("taskName").value.trim(),
       deadline: document.getElementById("taskDeadline").value,
@@ -345,7 +376,11 @@ function initEvents() {
   });
 
   document.getElementById("generateBtn").addEventListener("click", () => {
-    weeklyPlan = generatePlan();
+    if (!state.profile.ready) {
+      alert("Please set wake/sleep rhythm first.");
+      return;
+    }
+    generatePlan();
     saveState();
     renderCalendar();
     renderProgress();
@@ -353,7 +388,7 @@ function initEvents() {
   });
 
   document.getElementById("resetPlanBtn").addEventListener("click", () => {
-    weeklyPlan = [];
+    state.weeklyPlan = [];
     saveState();
     renderCalendar();
     renderProgress();
@@ -365,17 +400,24 @@ function initEvents() {
       return;
     }
     const permission = await Notification.requestPermission();
-    alert(permission === "granted" ? "Reminders enabled." : "Notifications are blocked.");
+    alert(permission === "granted" ? "Reminders enabled." : "Notifications blocked.");
   });
 }
 
-function renderAll() {
+function init() {
+  populateDaySelect();
+  if (state.profile.ready) {
+    document.getElementById("onboarding").classList.add("hidden");
+    document.getElementById("wakeTime").value = state.profile.wakeTime;
+    document.getElementById("sleepTime").value = state.profile.sleepTime;
+  }
+  renderRhythmBadge();
   renderFixed();
   renderGoals();
   renderMatrix();
   renderCalendar();
   renderProgress();
+  bindEvents();
 }
 
-initEvents();
-renderAll();
+init();

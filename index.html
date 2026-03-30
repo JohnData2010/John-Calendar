@@ -3,93 +3,108 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FlowState Planner</title>
+    <title>Kanso Planner</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div id="onboarding" class="overlay">
+      <section class="overlay-card">
+        <h2>🌤️ Set your daily rhythm first</h2>
+        <p>Before adding tasks or generating schedule, tell the app your normal wake/sleep time.</p>
+        <form id="profileForm" class="form-grid">
+          <label>Wake up time <input id="wakeTime" type="time" required /></label>
+          <label>Sleep time <input id="sleepTime" type="time" required /></label>
+          <button type="submit">Save rhythm & start</button>
+        </form>
+      </section>
+    </div>
+
     <header class="hero">
-      <div class="hero__inner">
-        <p class="badge">Personalized for your MRes lifestyle</p>
-        <h1>FlowState Planner</h1>
-        <p class="subtitle">Less stress, clearer priorities. Your week auto-planned with an Eisenhower Matrix + smart time blocking.</p>
-      </div>
+      <p class="jp">簡素 • Calm, clear, focused</p>
+      <h1>🌸 Kanso Planner</h1>
+      <p>Japanese minimal style planner with Eisenhower Matrix + adaptive weekly time blocks.</p>
+      <div id="rhythmBadge" class="rhythm"></div>
     </header>
 
     <main class="container">
-      <section class="panel panel--fixed">
-        <div class="panel__head">
-          <h2>Fixed commitments</h2>
-          <p>Anchors your week automatically.</p>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>🗓️ Fixed commitments</h2>
+          <p>You can add, edit, or delete any fixed event.</p>
         </div>
+
+        <form id="fixedForm" class="form-grid">
+          <input id="fixedTitle" required placeholder="Title (e.g., Supervisor meeting)" />
+          <select id="fixedDay" required></select>
+          <div class="split">
+            <input id="fixedStart" type="time" required />
+            <input id="fixedEnd" type="time" required />
+          </div>
+          <button type="submit">Save fixed event</button>
+        </form>
+
         <ul id="fixedList" class="list"></ul>
       </section>
 
-      <section class="panel panel--goals">
-        <div class="panel__head">
-          <h2>Recurring goals</h2>
-          <p>Great for SQL, gym, reading.</p>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>🎯 Recurring goals</h2>
+          <p>For SQL, gym, reading and habits.</p>
         </div>
-
         <form id="goalForm" class="form-grid">
-          <input id="goalName" required placeholder="Goal name (e.g., SQL self-study)" />
-          <input id="goalSessions" type="number" min="1" max="14" required placeholder="Sessions / week" />
-          <input id="goalDuration" type="number" min="30" max="240" step="15" required placeholder="Minutes / session" />
-          <label class="inline">
-            Priority
-            <select id="goalPriority">
-              <option value="high">High</option>
-              <option value="medium" selected>Medium</option>
-              <option value="low">Low</option>
-            </select>
-          </label>
-          <button type="submit">Add recurring goal</button>
+          <input id="goalName" required placeholder="Goal name" />
+          <input id="goalSessions" type="number" min="1" max="14" required placeholder="Sessions/week" />
+          <input id="goalDuration" type="number" min="30" max="240" step="15" required placeholder="Minutes/session" />
+          <select id="goalPriority">
+            <option value="high">High</option>
+            <option value="medium" selected>Medium</option>
+            <option value="low">Low</option>
+          </select>
+          <button type="submit">Add goal</button>
         </form>
         <ul id="goalList" class="list compact"></ul>
       </section>
 
-      <section class="panel panel--matrix">
-        <div class="panel__head">
-          <h2>Eisenhower Matrix</h2>
-          <p>Add deadlines/new tasks and prioritize like familiar productivity apps.</p>
+      <section class="panel panel-wide">
+        <div class="panel-head">
+          <h2>🧭 Eisenhower Matrix</h2>
+          <p>New tasks + deadlines go here first.</p>
         </div>
-
         <form id="taskForm" class="form-grid">
-          <input id="taskName" required placeholder="Task (e.g., Literature review draft)" />
+          <input id="taskName" required placeholder="Task name" />
           <input id="taskDeadline" type="datetime-local" />
           <input id="taskDuration" type="number" min="15" max="300" step="15" required placeholder="Estimated minutes" />
-          <div class="toggle-row">
+          <div class="split">
             <label><input id="taskImportant" type="checkbox" checked /> Important</label>
             <label><input id="taskUrgent" type="checkbox" /> Urgent</label>
           </div>
           <button type="submit">Add matrix task</button>
         </form>
 
-        <div class="matrix" id="matrixBoard">
-          <article class="quad q1"><h3>Do First</h3><p>Urgent + Important</p><div class="quad__items" data-quad="q1"></div></article>
-          <article class="quad q2"><h3>Schedule</h3><p>Important + Not Urgent</p><div class="quad__items" data-quad="q2"></div></article>
-          <article class="quad q3"><h3>Delegate</h3><p>Urgent + Not Important</p><div class="quad__items" data-quad="q3"></div></article>
-          <article class="quad q4"><h3>Eliminate</h3><p>Not Urgent + Not Important</p><div class="quad__items" data-quad="q4"></div></article>
+        <div class="matrix">
+          <article class="quad q1"><h3>Do First</h3><div class="quad-items" data-q="q1"></div></article>
+          <article class="quad q2"><h3>Schedule</h3><div class="quad-items" data-q="q2"></div></article>
+          <article class="quad q3"><h3>Delegate</h3><div class="quad-items" data-q="q3"></div></article>
+          <article class="quad q4"><h3>Eliminate</h3><div class="quad-items" data-q="q4"></div></article>
         </div>
       </section>
 
-      <section class="panel panel--planner">
-        <div class="panel__head">
-          <h2>Smart planner</h2>
-          <p>Builds your week from priorities, deadlines, and existing commitments.</p>
+      <section class="panel panel-wide">
+        <div class="panel-head">
+          <h2>⚙️ Planner controls</h2>
+          <p>Generate schedule only after rhythm is set.</p>
         </div>
         <div class="actions">
-          <button id="generateBtn">Generate weekly plan</button>
+          <button id="generateBtn">Generate week plan</button>
           <button id="resetPlanBtn" class="ghost">Reset</button>
           <button id="notifyBtn" class="ghost">Enable reminders</button>
         </div>
-        <p class="note">Tip: Matrix tasks with near deadlines are inserted first, then recurring goals.</p>
         <p id="progressSummary" class="progress"></p>
       </section>
 
-      <section class="panel panel--calendar">
-        <div class="panel__head">
-          <h2>Weekly board</h2>
-          <p>Check done items and track momentum.</p>
+      <section class="panel panel-wide">
+        <div class="panel-head">
+          <h2>📅 Weekly board</h2>
         </div>
         <div id="calendar" class="calendar"></div>
       </section>
@@ -97,8 +112,11 @@
 
     <template id="itemTemplate">
       <li>
-        <span class="title"></span>
-        <span class="meta"></span>
+        <div>
+          <span class="title"></span>
+          <span class="meta"></span>
+        </div>
+        <div class="item-actions"></div>
       </li>
     </template>
 
