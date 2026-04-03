@@ -1,0 +1,1330 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kanso - The Living Scroll</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <h1>Kanso</h1>
+          <p>Focus on Simplicity</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <button class="nav-item active" type="button" data-nav="dashboard">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z"></path>
+              </svg>
+            </span>
+            <span>Dashboard</span>
+          </button>
+          <button class="nav-item" type="button" id="journalBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 4h9a4 4 0 0 1 4 4v12H9a4 4 0 0 0-4 0zm11 16V8a2 2 0 0 0-2-2H7v12a4.8 4.8 0 0 1 2-.4zM18.7 3.3l2 2-7.9 7.9-2.7.7.7-2.7z"></path>
+              </svg>
+            </span>
+            <span>Journal</span>
+          </button>
+          <button class="nav-item" type="button" id="weeklyBoardBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 5h3v14H3zM8 5h3v14H8zM13 5h3v14h-3zM18 5h3v14h-3z"></path>
+              </svg>
+            </span>
+            <span>Weekly Board</span>
+          </button>
+          <button class="nav-item" type="button" id="goalsBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 4V2h10v2h4v4c0 3.2-2.1 5.9-5 6.7V18h3v2H5v-2h3v-3.3C5.1 13.9 3 11.2 3 8V4h4zm0 2H5v2c0 1.7.8 3.2 2.1 4.2C7 11.5 7 10.8 7 10V6zm12 0h-2v4c0 .8 0 1.5-.1 2.2C18.2 11.2 19 9.7 19 8V6z"></path>
+              </svg>
+            </span>
+            <span>Goals</span>
+          </button>
+          <button class="nav-item" type="button" id="collectionsBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 2 5 15h14L12 2z" />
+                <path fill="currentColor" d="M11 15h2v5h-2z" />
+              </svg>
+            </span>
+            <span>Collections</span>
+          </button>
+          <button class="nav-item" type="button" id="openMatrixBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"></path>
+              </svg>
+            </span>
+            <span>Eisenhower Matrix</span>
+          </button>
+        </nav>
+
+        <button id="smartSchedulerBtn" class="smart-button" type="button">
+          <span class="smart-button__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path
+                d="M12 2l1.4 4.3L17.7 8l-4.3 1.4L12 13.7l-1.4-4.3L6.3 8l4.3-1.4L12 2zM19 13l.9 2.8 2.8.9-2.8.9L19 20l-.9-2.8-2.8-.9 2.8-.9L19 13zM5 13l.8 2.5 2.5.8-2.5.8L5 20l-.8-2.5-2.5-.8 2.5-.8L5 13z"
+              />
+            </svg>
+          </span>
+          <span>Smart Scheduler</span>
+        </button>
+
+        <div class="sidebar-footer">
+          <button class="nav-item footer-item" type="button" id="settingsBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19.4 13a7.8 7.8 0 0 0 0-2l2-1.5-2-3.5-2.4 1a7.6 7.6 0 0 0-1.7-1l-.3-2.6H9l-.3 2.6a7.6 7.6 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7.8 7.8 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7.6 7.6 0 0 0 1.7 1l.3 2.6h6l.3-2.6a7.6 7.6 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5zM12 15.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4z"></path>
+              </svg>
+            </span>
+            <span>Settings</span>
+          </button>
+          <button class="nav-item footer-item" type="button" id="supportBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 16h-1.5v-1.5H12zm1.8-6.4-.7.5c-.6.4-.8.7-.8 1.4v.4h-1.5v-.5c0-1.1.3-1.8 1.3-2.5l.8-.5a1.6 1.6 0 0 0 .7-1.3 1.9 1.9 0 0 0-3.8 0H8.3a3.4 3.4 0 0 1 6.8 0 3 3 0 0 1-1.3 2.5z"></path>
+              </svg>
+            </span>
+            <span>Support</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header id="appTopbar" class="topbar">
+          <label class="search-shell" for="searchInput">
+            <span class="search-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10 4a6 6 0 1 0 3.9 10.6l4.2 4.2 1.4-1.4-4.2-4.2A6 6 0 0 0 10 4zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
+              </svg>
+            </span>
+            <input id="searchInput" type="search" placeholder="Search tasks..." autocomplete="off" />
+          </label>
+
+          <div class="topbar-actions">
+            <div class="topbar-notify-wrap">
+              <button id="notifyToggleBtn" class="icon-button" type="button" aria-expanded="false" aria-controls="notificationPopover" aria-label="Notifications">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 22a2.5 2.5 0 0 0 2.4-2h-4.8A2.5 2.5 0 0 0 12 22zm6-6V11a6 6 0 0 0-4.5-5.8V4a1.5 1.5 0 0 0-3 0v1.2A6 6 0 0 0 6 11v5l-2 2v1h16v-1z"></path>
+                </svg>
+              </button>
+              <div id="notificationPopover" class="notification-popover hidden" role="region" aria-label="Notifications"></div>
+            </div>
+            <button id="pomodoroOpenBtn" class="icon-button pomodoro-top-btn" type="button" aria-label="Pomodoro timer" title="Pomodoro">
+              <svg class="pomodoro-top-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm.5-8.15V7h-2v7.2l4.9 2.9.9-1.5L12.5 11.85z"
+                ></path>
+              </svg>
+              <span id="pomodoroTopBadge" class="pomodoro-top-badge hidden" aria-live="polite"></span>
+            </button>
+            <button id="themeToggleBtn" class="icon-button" type="button" aria-label="Toggle dark mode">
+              <svg id="themeIconMoon" class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 13a8 8 0 1 1-10-10 7 7 0 1 0 10 10z"></path>
+              </svg>
+              <svg id="themeIconSun" class="theme-icon-sun hidden" viewBox="0 0 24 24" aria-hidden="true" fill="none">
+                <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
+                <path
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+                ></path>
+              </svg>
+            </button>
+            <button id="profileOpenBtn" class="avatar-button" type="button" aria-label="Profile">DR</button>
+          </div>
+        </header>
+
+        <section id="dashboardView" class="app-view">
+          <div class="dashboard">
+            <section class="dashboard-main">
+              <div class="main-header">
+                <div>
+                  <h2 id="scrollTitleText">Friday, Apr 3</h2>
+                  <p id="scrollDateText" class="scroll-subtitle"></p>
+                </div>
+                <div class="scroll-controls">
+                  <button id="prevDay" class="circle-button" type="button" aria-label="Previous day">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M14.7 6.3 9 12l5.7 5.7-1.4 1.4L6.2 12l7.1-7.1z"></path>
+                    </svg>
+                  </button>
+                  <button id="nextDay" class="circle-button" type="button" aria-label="Next day">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M9.3 17.7 15 12 9.3 6.3l1.4-1.4 7.1 7.1-7.1 7.1z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <section class="living-scroll-panel" id="weeklyBoardSection" aria-label="Day timeline">
+                <div id="livingScroll" class="living-scroll"></div>
+              </section>
+            </section>
+
+            <aside class="insights-rail">
+              <section class="insight-card rhythm-card" id="goalsSection">
+                <div class="insight-head">
+                  <span class="leaf-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M5 19.5C5 12.5 9.3 5.5 18 4c.8-.1 1.6.4 1.8 1.2.2.8.2 1.7.1 2.5C19.2 15.5 13.7 19.5 8 19.5H5z"
+                      ></path>
+                      <path
+                        d="M9 17.5c1.8-2.3 3.4-3.7 6-5"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.4"
+                        stroke-linecap="round"
+                      ></path>
+                    </svg>
+                  </span>
+                  <h3>Weekly Rhythm</h3>
+                </div>
+                <div id="weeklyRhythm" class="progress-stack"></div>
+                <div class="momentum-row">
+                  <div id="momentumDays" class="momentum-days" aria-label="Week momentum"></div>
+                  <span class="momentum-text">Keep the momentum to grow your tree</span>
+                </div>
+                <div id="weeklyTreeCard" class="weekly-tree-card" aria-hidden="true"></div>
+              </section>
+
+              <section class="insight-card zen-card">
+                <div class="insight-head">
+                  <h3>Zen Focus</h3>
+                </div>
+                <div id="zenFocusList" class="zen-list"></div>
+              </section>
+
+              <section class="insight-card daily-card" id="dailyRhythmCard">
+                <div class="insight-head daily-rhythm-head">
+                  <h3>Daily Rhythm</h3>
+                  <span class="moon-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M21 13a8 8 0 1 1-10-10 7 7 0 1 0 10 10z"></path>
+                    </svg>
+                  </span>
+                </div>
+                <div class="rhythm-icons">
+                  <div class="rhythm-box rhythm-box--wake">
+                    <img
+                      class="rhythm-icon-img"
+                      src="assets/daily-rhythm/sun.png"
+                      width="56"
+                      height="56"
+                      alt=""
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="rhythm-line" id="rhythmLine" role="presentation" aria-hidden="true">
+                    <div class="rhythm-line__track"></div>
+                    <span class="rhythm-dot rhythm-dot--now" id="rhythmNowDot"></span>
+                  </div>
+                  <div class="rhythm-box rhythm-box--sleep">
+                    <img
+                      class="rhythm-icon-img"
+                      src="assets/daily-rhythm/moon.png"
+                      width="56"
+                      height="56"
+                      alt=""
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+                <div class="rhythm-metrics">
+                  <div>
+                    <span class="metric-label">Wake</span>
+                    <strong id="wakeMetric"></strong>
+                  </div>
+                  <div>
+                    <span class="metric-label">Sleep</span>
+                    <strong id="sleepMetric"></strong>
+                  </div>
+                </div>
+              </section>
+            </aside>
+          </div>
+        </section>
+
+        <section id="journalView" class="app-view hidden">
+          <div class="journal-page">
+            <aside class="journal-sidebar">
+              <div class="journal-brand">
+                <h2>The Living Scroll</h2>
+                <p>Wabi-Sabi Productivity</p>
+              </div>
+
+              <nav class="journal-nav">
+                <button id="journalNavMain" class="journal-nav-item active" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M5 4h9a4 4 0 0 1 4 4v12H9a4 4 0 0 0-4 0zm11 16V8a2 2 0 0 0-2-2H7v12a4.8 4.8 0 0 1 2-.4zM18.7 3.3l2 2-7.9 7.9-2.7.7.7-2.7z"></path>
+                    </svg>
+                  </span>
+                  <span>Journal</span>
+                </button>
+                <button id="journalNavIntentions" class="journal-nav-item" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="m12 2 1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6zM5 14l1 2.6L8.6 18 6 19l-1 2.6L4 19l-2.6-1L4 16.6zM18.5 13l1.1 2.9 2.9 1.1-2.9 1.1-1.1 2.9-1.1-2.9-2.9-1.1 2.9-1.1z"></path>
+                    </svg>
+                  </span>
+                  <span>Intentions</span>
+                </button>
+                <button id="journalNavArchive" class="journal-nav-item" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M4 5h16v4H4zm1 6h14v8H5zm5 2v2h4v-2z"></path>
+                    </svg>
+                  </span>
+                  <span>Archive</span>
+                </button>
+                <button id="journalNavReflections" class="journal-nav-item" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2C9 6.8 5 9 5 13a7 7 0 0 0 14 0c0-4-4-6.2-7-11z"></path>
+                    </svg>
+                  </span>
+                  <span>Reflections</span>
+                </button>
+              </nav>
+
+              <button id="journalNewEntryBtn" class="journal-entry-button" type="button">New Entry</button>
+
+              <div class="journal-sidebar-footer">
+                <button id="journalSettingsBtn" class="journal-footer-link" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M19.4 13a7.8 7.8 0 0 0 0-2l2-1.5-2-3.5-2.4 1a7.6 7.6 0 0 0-1.7-1l-.3-2.6H9l-.3 2.6a7.6 7.6 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7.8 7.8 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7.6 7.6 0 0 0 1.7 1l.3 2.6h6l.3-2.6a7.6 7.6 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5zM12 15.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4z"></path>
+                    </svg>
+                  </span>
+                  <span>Settings</span>
+                </button>
+                <button id="journalHelpBtn" class="journal-footer-link" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 16h-1.5v-1.5H12zm1.8-6.4-.7.5c-.6.4-.8.7-.8 1.4v.4h-1.5v-.5c0-1.1.3-1.8 1.3-2.5l.8-.5a1.6 1.6 0 0 0 .7-1.3 1.9 1.9 0 0 0-3.8 0H8.3a3.4 3.4 0 0 1 6.8 0 3 3 0 0 1-1.3 2.5z"></path>
+                    </svg>
+                  </span>
+                  <span>Help</span>
+                </button>
+              </div>
+            </aside>
+
+            <section class="journal-main">
+              <div id="journalDailyPane">
+                <header class="journal-header">
+                  <div>
+                    <p id="journalDateLabel" class="journal-date-label"></p>
+                    <h2>Daily Reflection</h2>
+                  </div>
+                  <button id="journalArchiveBtn" class="journal-archive-status" type="button">
+                    <span class="journal-archive-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 3 3 12l2 2 7-7 7 7 2-2zM5 13h14v7H5z"></path>
+                      </svg>
+                    </span>
+                    <span id="journalArchiveText">Saved to Archive</span>
+                  </button>
+                </header>
+
+                <section id="journalIntentionsSection" class="journal-section">
+                  <div class="journal-section-head warm">
+                    <span class="journal-section-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 4a1 1 0 0 1 1 1v2.1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 12a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm8-5a1 1 0 0 1 1 1 1 1 0 0 1-1 1h-2.1a1 1 0 1 1 0-2zM6.1 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm10.2-4.8 1.5-1.5a1 1 0 1 1 1.4 1.4l-1.5 1.5a1 1 0 1 1-1.4-1.4zM6.2 16.3l1.5-1.5a1 1 0 1 1 1.4 1.4l-1.5 1.5a1 1 0 1 1-1.4-1.4zm11.6 1.4-1.5-1.5a1 1 0 1 1 1.4-1.4l1.5 1.5a1 1 0 1 1-1.4 1.4zM7.7 7.6 6.2 6.1a1 1 0 1 1 1.4-1.4l1.5 1.5a1 1 0 1 1-1.4 1.4z"></path>
+                      </svg>
+                    </span>
+                    <h3>Morning Intention</h3>
+                  </div>
+                  <textarea id="journalMorningInput" class="journal-panel journal-hero-panel" placeholder="What energy will you carry today?"></textarea>
+                </section>
+
+                <section id="journalGratitudeSection" class="journal-section">
+                  <div class="journal-section-head sage">
+                    <span class="journal-section-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 22C7 20 4 16.4 4 12a4 4 0 0 1 7-2.6A4 4 0 0 1 18 12c0 4.4-3 8-6 10z"></path>
+                      </svg>
+                    </span>
+                    <h3>Evening Gratitude</h3>
+                  </div>
+                  <div class="journal-gratitude-grid">
+                    <label class="journal-panel journal-gratitude-card">
+                      <span>One</span>
+                      <input id="journalGratitude1" type="text" placeholder="A small joy..." />
+                    </label>
+                    <label class="journal-panel journal-gratitude-card">
+                      <span>Two</span>
+                      <input id="journalGratitude2" type="text" placeholder="A person who helped..." />
+                    </label>
+                    <label class="journal-panel journal-gratitude-card">
+                      <span>Three</span>
+                      <input id="journalGratitude3" type="text" placeholder="A moment of peace..." />
+                    </label>
+                  </div>
+                </section>
+
+                <section id="journalNotesSection" class="journal-section">
+                  <div class="journal-section-head cool">
+                    <span class="journal-section-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="m4 16.5 9.8-9.8 3.5 3.5L7.5 20H4zm13.7-10.8 1.8-1.8a1.3 1.3 0 1 1 1.8 1.8l-1.8 1.8z"></path>
+                      </svg>
+                    </span>
+                    <h3>Mindful Notes</h3>
+                  </div>
+                  <textarea id="journalNotesInput" class="journal-notes-sheet" placeholder="Let your thoughts flow onto the page..."></textarea>
+                </section>
+
+                <div class="journal-rail">
+                  <button class="journal-rail-button" type="button" data-journal-target="journalIntentionsSection" aria-label="Go to intentions">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 4a8 8 0 1 0 8 8c0-5-8-8-8-8z"></path>
+                    </svg>
+                  </button>
+                  <button class="journal-rail-button" type="button" data-journal-target="journalGratitudeSection" aria-label="Go to gratitude">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 22C7 20 4 16.4 4 12a4 4 0 0 1 7-2.6A4 4 0 0 1 18 12c0 4.4-3 8-6 10z"></path>
+                    </svg>
+                  </button>
+                  <button class="journal-rail-button" type="button" data-journal-target="journalNotesSection" aria-label="Go to notes">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 2C9 6.8 5 9 5 13a7 7 0 0 0 14 0c0-4-4-6.2-7-11z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div id="journalReflectionsPane" class="hidden">
+                <header class="reflections-header">
+                  <div class="reflections-header-left">
+                    <button id="journalReflectionsBackBtn" class="reflections-back" type="button">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M14.7 6.3 9 12l5.7 5.7-1.4 1.4L6.2 12l7.1-7.1z"></path>
+                      </svg>
+                    </button>
+                    <h2>Reflections</h2>
+                  </div>
+                  <div class="reflections-header-actions">
+                    <button id="reflectionsFilterBtn" class="reflections-icon-btn" type="button" aria-label="Filter reflections">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h16v2H4zm3 5h10v2H7zm3 5h4v2h-4z"></path>
+                      </svg>
+                    </button>
+                    <button id="reflectionsMoreBtn" class="reflections-icon-btn" type="button" aria-label="More actions">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="5" r="1.8"></circle>
+                        <circle cx="12" cy="12" r="1.8"></circle>
+                        <circle cx="12" cy="19" r="1.8"></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </header>
+
+                <section class="reflections-hero-grid">
+                  <article class="reflections-growth-card">
+                    <h3>Timeline of Growth</h3>
+                    <p>Your emotional landscape over the last thirty sunrises, captured in organic rhythm.</p>
+                    <div id="reflectionsBars" class="reflections-bars"></div>
+                  </article>
+
+                  <aside class="reflections-focus-card">
+                    <span class="reflections-eyebrow">Primary Focus</span>
+                    <h3 id="reflectionsPrimaryFocus">Creative Stillness</h3>
+                    <blockquote id="reflectionsQuote">"You are most present when the mind is allowed to simply observe without judgment."</blockquote>
+                    <div class="reflections-insight-id">Insight #<span id="reflectionsInsightId">42</span></div>
+                  </aside>
+                </section>
+
+                <section class="reflections-insights-section">
+                  <div class="reflections-section-head">
+                    <div>
+                      <h3>Recent Insights</h3>
+                      <p>Threads of wisdom pulled from your daily narrative.</p>
+                    </div>
+                    <button id="reflectionsViewAllBtn" class="reflections-link-button" type="button">View All Insights</button>
+                  </div>
+                  <div id="reflectionsInsightsGrid" class="reflections-insights-grid"></div>
+                </section>
+
+                <section id="reflectionsReviewSection" class="reflections-review-card">
+                  <div class="reflections-review-copy">
+                    <h3>Weekly Review</h3>
+                    <p>Take a moment to breathe and reflect on the week that has passed. There are no wrong answers.</p>
+
+                    <label class="reflections-question">
+                      <span>Question One</span>
+                      <strong>What brought you the most peace this week?</strong>
+                      <textarea id="reflectionAnswerOne" placeholder="Soft rain against the window during tea..."></textarea>
+                    </label>
+
+                    <label class="reflections-question">
+                      <span>Question Two</span>
+                      <strong>What did you learn about your rhythm?</strong>
+                      <textarea id="reflectionAnswerTwo" placeholder="I work best in short, intense bursts..."></textarea>
+                    </label>
+
+                    <button id="completeReflectionBtn" class="complete-reflection-btn" type="button">Complete Reflection</button>
+                  </div>
+
+                  <div class="reflections-review-visual">
+                    <div class="reflection-visual-card"></div>
+                    <div class="reflection-quote-card">
+                      <span>✦</span>
+                      <p>"Growth is a slow process, but it is always happening."</p>
+                    </div>
+                  </div>
+                </section>
+
+                <footer class="reflections-footer">Finely Crafted Reflections • Komorebi</footer>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section id="weeklyView" class="app-view hidden">
+          <div class="weekly-page">
+            <aside class="weekly-sidebar">
+              <div class="weekly-brand">
+                <h2>Zen Planner</h2>
+              </div>
+
+              <nav class="weekly-nav">
+                <button class="weekly-nav-item" type="button" id="weeklyDashboardBtn">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z"></path>
+                    </svg>
+                  </span>
+                  <span>Dashboard</span>
+                </button>
+                <button class="weekly-nav-item active" type="button">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M3 5h3v14H3zM8 5h3v14H8zM13 5h3v14h-3zM18 5h3v14h-3z"></path>
+                    </svg>
+                  </span>
+                  <span>Weekly Board</span>
+                </button>
+                <button class="weekly-nav-item" type="button" id="weeklyGoalsBtn">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2a8.5 8.5 0 1 0 8.5 8.5A8.5 8.5 0 0 0 12 2zm0 2a6.5 6.5 0 0 1 6.3 5H12zm0 15a6.5 6.5 0 0 1-6.3-5H12z"></path>
+                    </svg>
+                  </span>
+                  <span>Goals</span>
+                </button>
+                <button class="weekly-nav-item" type="button" id="weeklyMatrixBtn">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"></path>
+                    </svg>
+                  </span>
+                  <span>Matrix</span>
+                </button>
+              </nav>
+
+              <div class="weekly-sidebar-bottom">
+                <button class="weekly-side-link" type="button">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M19.4 13a7.8 7.8 0 0 0 0-2l2-1.5-2-3.5-2.4 1a7.6 7.6 0 0 0-1.7-1l-.3-2.6H9l-.3 2.6a7.6 7.6 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7.8 7.8 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7.6 7.6 0 0 0 1.7 1l.3 2.6h6l.3-2.6a7.6 7.6 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5zM12 15.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4z"></path>
+                    </svg>
+                  </span>
+                  <span>Settings</span>
+                </button>
+                <button class="weekly-side-link" type="button">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 16h-1.5v-1.5H12zm1.8-6.4-.7.5c-.6.4-.8.7-.8 1.4v.4h-1.5v-.5c0-1.1.3-1.8 1.3-2.5l.8-.5a1.6 1.6 0 0 0 .7-1.3 1.9 1.9 0 0 0-3.8 0H8.3a3.4 3.4 0 0 1 6.8 0 3 3 0 0 1-1.3 2.5z"></path>
+                    </svg>
+                  </span>
+                  <span>Help</span>
+                </button>
+
+                <div class="weekly-profile">
+                  <span class="weekly-profile-avatar">DR</span>
+                  <div>
+                    <strong>MRes Student</strong>
+                    <p>Academic Year</p>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <section class="weekly-main">
+              <header class="weekly-top">
+                <button id="weeklyProfileBtn" class="weekly-profile-button" type="button" aria-label="Profile">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z"></path>
+                  </svg>
+                </button>
+              </header>
+
+              <section class="weekly-calendar-header">
+                <div>
+                  <h3 id="weeklyMonthLabel">March <span>2024</span></h3>
+                </div>
+                <div class="weekly-strip-controls">
+                  <button id="weeklyPrevBtn" class="weekly-strip-arrow" type="button" aria-label="Previous week">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M14.7 6.3 9 12l5.7 5.7-1.4 1.4L6.2 12l7.1-7.1z"></path>
+                    </svg>
+                  </button>
+                  <button id="weeklyNextBtn" class="weekly-strip-arrow" type="button" aria-label="Next week">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9.3 17.7 15 12 9.3 6.3l1.4-1.4 7.1 7.1-7.1 7.1z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </section>
+
+              <div id="weeklyDateStrip" class="weekly-date-strip"></div>
+              <div id="weeklyBoardGrid" class="weekly-board-grid"></div>
+            </section>
+
+            <button id="weeklyFabBtn" class="weekly-fab" type="button" aria-label="Add entry">+</button>
+          </div>
+        </section>
+
+        <section id="matrixView" class="app-view hidden">
+          <div class="matrix-page">
+            <section class="matrix-main">
+              <header class="matrix-hero">
+                <h2>Matrix</h2>
+                <p>The Living Scroll prioritizes peace over pressure. Balance your focus across these four organic dimensions.</p>
+                <button id="matrixNewEntryBtn" class="matrix-entry-button" type="button">+ New Entry</button>
+              </header>
+
+              <div class="matrix-grid-page">
+                <section class="matrix-panel do-panel" data-zone="q1">
+                  <div class="matrix-panel-head">
+                    <h3>Do</h3>
+                    <span class="matrix-panel-mark">⚡</span>
+                  </div>
+                  <div class="matrix-task-list" data-page-drop="q1"></div>
+                </section>
+
+                <section class="matrix-panel schedule-panel" data-zone="q2">
+                  <div class="matrix-panel-head">
+                    <h3>Schedule</h3>
+                    <span class="matrix-panel-mark">🗓</span>
+                  </div>
+                  <div class="matrix-task-list" data-page-drop="q2"></div>
+                </section>
+
+                <section class="matrix-panel delegate-panel" data-zone="q3">
+                  <div class="matrix-panel-head">
+                    <h3>Delegate</h3>
+                    <span class="matrix-panel-mark">👥</span>
+                  </div>
+                  <div class="matrix-task-list" data-page-drop="q3"></div>
+                </section>
+
+                <section class="matrix-panel eliminate-panel" data-zone="q4">
+                  <div class="matrix-panel-head">
+                    <h3>Eliminate</h3>
+                    <span class="matrix-panel-mark">🗑</span>
+                  </div>
+                  <div class="matrix-task-list" data-page-drop="q4"></div>
+                </section>
+              </div>
+
+              <section class="clarity-pulse">
+                <div class="clarity-ring">
+                  <div class="clarity-ring-inner">
+                    <strong id="clarityValue">68%</strong>
+                  </div>
+                </div>
+                <div class="clarity-copy">
+                  <h3>Clarity Pulse</h3>
+                  <p id="clarityText">You've cleared the most pressing matters in your Do zone. Your cognitive load is breathing naturally.</p>
+                </div>
+                <button class="clarity-button" type="button">Reflect</button>
+              </section>
+            </section>
+          </div>
+        </section>
+
+        <section id="goalsView" class="app-view hidden">
+          <div class="goals-page">
+            <aside class="goals-sidebar">
+              <div class="goals-brand">
+                <h2>Kanso</h2>
+                <p>The Living Scroll</p>
+              </div>
+
+              <div class="goals-side-list">
+                <button class="goals-side-item" type="button">
+                  <span class="goals-side-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M7 3h10a2 2 0 0 1 2 2v14l-7-3-7 3V5a2 2 0 0 1 2-2z"></path>
+                    </svg>
+                  </span>
+                  <span>Journal</span>
+                </button>
+                <button class="goals-side-item active" type="button">
+                  <span class="goals-side-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M8.2 7.4a2.6 2.6 0 1 1 3.7-3.7l1.3 1.3-1.8 1.8-1.3-1.3a.8.8 0 1 0-1.1 1.1l1.3 1.3-1.8 1.8-1.3-1.3zm7.6 9.2a2.6 2.6 0 1 1-3.7 3.7l-1.3-1.3 1.8-1.8 1.3 1.3a.8.8 0 1 0 1.1-1.1l-1.3-1.3 1.8-1.8 1.3 1.3zM7 17l10-10 1.8 1.8-10 10zM5.2 13.4l5.4 5.4-1.8 1.8-5.4-5.4z"></path>
+                    </svg>
+                  </span>
+                  <span>Habits</span>
+                </button>
+                <button class="goals-side-item" type="button">
+                  <span class="goals-side-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M5 4h14v3H5zm0 5h14v3H5zm0 5h14v3H5zm0 5h14v1H5z"></path>
+                    </svg>
+                  </span>
+                  <span>Study</span>
+                </button>
+                <button class="goals-side-item" type="button">
+                  <span class="goals-side-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M7.5 8.5A3.5 3.5 0 1 1 11 5v4H7.5a1.5 1.5 0 0 0 0 3H11v7H8.5A3.5 3.5 0 1 1 5 15.5V12a3.5 3.5 0 0 1 2.5-3.5zm9 0A3.5 3.5 0 0 0 13 5v4h3.5a1.5 1.5 0 0 1 0 3H13v7h2.5a3.5 3.5 0 1 0 3.5-3.5V12a3.5 3.5 0 0 0-2.5-3.5z"></path>
+                    </svg>
+                  </span>
+                  <span>Gym</span>
+                </button>
+              </div>
+
+              <button id="goalsNewEntryBtn" class="goals-entry-button" type="button">New Entry</button>
+
+              <div class="goals-profile">
+                <span class="goals-profile-avatar">AC</span>
+                <div>
+                  <strong>Alex Chen</strong>
+                  <p>MRES Student</p>
+                </div>
+              </div>
+            </aside>
+
+            <section class="goals-main">
+              <header class="goals-hero">
+                <button id="goalsBackBtn" class="goals-back" type="button">
+                  <span class="goals-back-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M14.7 5.3 8 12l6.7 6.7-1.4 1.4L5.2 12l8.1-8.1z"></path>
+                    </svg>
+                  </span>
+                  <span>Back</span>
+                </button>
+                <h2>Goals & Habits</h2>
+                <p>Cultivating discipline through soft rhythms. Your progress is a living scroll of intention and action.</p>
+              </header>
+
+              <div class="goals-grid">
+                <section class="goal-spotlight">
+                  <div class="goal-top">
+                    <div>
+                      <span class="goal-chip">Active Goal</span>
+                      <h3 id="goalSpotlightTitle">SQL Self-Study</h3>
+                      <p id="goalSpotlightMeta">3 sessions per week • Database Mastery</p>
+                    </div>
+                    <div class="goal-progress-ring">
+                      <strong id="goalProgressValue">66%</strong>
+                      <span>Progress</span>
+                    </div>
+                  </div>
+
+                  <div id="goalWeekMini" class="goal-week-mini"></div>
+
+                  <div class="goal-spotlight-footer">
+                    <div class="goal-avatars">
+                      <span class="goal-avatar"></span>
+                      <span class="goal-avatar plus">+2</span>
+                    </div>
+                    <button id="goalScheduleBtn" class="goal-schedule-button" type="button">
+                      <span class="button-spark" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M12 2l1.7 4.3L18 8l-4.3 1.7L12 14l-1.7-4.3L6 8l4.3-1.7zM19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9zM5 15l1.2 2.8L9 19l-2.8 1.2L5 23l-1.2-2.8L1 19l2.8-1.2z"></path>
+                        </svg>
+                      </span>
+                      <span>Schedule Me</span>
+                    </button>
+                  </div>
+                </section>
+
+                <aside class="quote-card">
+                  <div class="quote-mark">“</div>
+                  <blockquote>
+                    <p>"Nature does not hurry, yet everything is accomplished."</p>
+                    <footer>Lao Tzu</footer>
+                  </blockquote>
+                </aside>
+
+                <section class="gym-journey-card">
+                  <div class="journey-head">
+                    <div class="journey-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M7.5 8.5A3.5 3.5 0 1 1 11 5v4H7.5a1.5 1.5 0 0 0 0 3H11v7H8.5A3.5 3.5 0 1 1 5 15.5V12a3.5 3.5 0 0 1 2.5-3.5zm9 0A3.5 3.5 0 0 0 13 5v4h3.5a1.5 1.5 0 0 1 0 3H13v7h2.5a3.5 3.5 0 1 0 3.5-3.5V12a3.5 3.5 0 0 0-2.5-3.5z"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3>Gym Journey</h3>
+                      <p>4x per week</p>
+                    </div>
+                  </div>
+
+                  <div class="journey-metric">
+                    <div class="journey-row">
+                      <span>Strength Training</span>
+                      <strong id="strengthMetric">2/3 done</strong>
+                    </div>
+                    <div class="journey-track"><div id="strengthBar" class="journey-bar partial"></div></div>
+                  </div>
+
+                  <div class="journey-metric">
+                    <div class="journey-row">
+                      <span>Mobility Flow</span>
+                      <strong id="mobilityMetric">1/1 done</strong>
+                    </div>
+                    <div class="journey-track"><div id="mobilityBar" class="journey-bar full"></div></div>
+                  </div>
+
+                  <button id="journeyScheduleBtn" class="journey-button" type="button">
+                    <span class="button-spark" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 2l1.7 4.3L18 8l-4.3 1.7L12 14l-1.7-4.3L6 8l4.3-1.7zM19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9z"></path>
+                      </svg>
+                    </span>
+                    <span>Schedule Me</span>
+                  </button>
+                </section>
+
+                <section class="habit-consistency-card">
+                  <div class="habit-left">
+                    <div class="habit-copy">
+                      <h3>Habit Consistency</h3>
+                      <p>Your rhythm has stabilized over the last 14 days. Morning sessions are your peak performance window.</p>
+                    </div>
+                    <div class="habit-dots-wrap">
+                      <div id="habitDots" class="habit-dots"></div>
+                      <div class="habit-days">
+                        <span>Mon</span>
+                        <span>Sun</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="habit-right">
+                    <div class="habit-performer">
+                      <span class="performer-label">Top Performer</span>
+                      <h4 id="topPerformerTitle">Morning SQL Focus</h4>
+                      <p id="topPerformerText">92% completion rate before 9 AM</p>
+                    </div>
+                    <div class="habit-growth">
+                      <span class="habit-growth-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M4 16.5 9 11l3.4 3.4L20 7v4h2V4h-7v2h3.4l-6 6-3.4-3.4L2 15z"></path>
+                        </svg>
+                      </span>
+                      <span id="habitGrowthText">+12% from last week</span>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <footer class="engine-strip">
+                <span id="engineStripText">Kanso Smart Engine: Optimizing your schedule for Friday morning.</span>
+                <span class="engine-dot"></span>
+              </footer>
+            </section>
+          </div>
+        </section>
+
+        <section id="collectionsView" class="app-view hidden">
+          <div class="collections-page">
+            <header class="collections-header">
+              <button id="collectionsBackBtn" class="collections-back" type="button" aria-label="Back to dashboard">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M14.7 6.3 9 12l5.7 5.7-1.4 1.4L6.2 12l7.1-7.1z"></path>
+                </svg>
+              </button>
+              <div class="collections-header-main">
+                <h1 class="collections-title">Garden Collection</h1>
+                <p class="collections-subtitle">Cultivating focus, one breath at a time.</p>
+              </div>
+              <div class="collections-header-badge" id="collectionsTreesBadge">12 Trees Planted</div>
+            </header>
+
+            <div class="collections-top-grid">
+              <article class="collections-focus-card" aria-labelledby="collectionsPlantName">
+                <div class="collections-focus-top">
+                  <div class="collections-focus-intro">
+                    <span class="collections-kicker">Current focus</span>
+                    <h2 id="collectionsPlantName" class="collections-plant-name">Evergreen Sprout</h2>
+                    <p id="collectionsStageLine" class="collections-stage-line">Stage 1: The First Breath</p>
+                  </div>
+                  <div class="collections-growth-meter" aria-label="Growth level">
+                    <span class="collections-growth-label">Growth Level</span>
+                    <strong id="collectionsGrowthPct" class="collections-growth-value">14%</strong>
+                  </div>
+                </div>
+
+                <div class="collections-focus-visual">
+                  <div class="collections-sprout-frame">
+                    <img
+                      id="collectionsSproutImg"
+                      src="https://images.unsplash.com/photo-1466692476869-a05e25b5d7d8?auto=format&fit=crop&w=560&h=560&q=80"
+                      width="280"
+                      height="280"
+                      alt=""
+                      decoding="async"
+                    />
+                  </div>
+                  <p class="collections-rustle">Gently rustle</p>
+                </div>
+
+                <div class="collections-week-track" id="collectionsWeekTrack" aria-label="This week"></div>
+              </article>
+
+              <aside class="collections-side-cards">
+                <div class="collections-tip-card">
+                  <div class="collections-tip-head">
+                    <span class="collections-sparkles" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path
+                          fill="#6B5344"
+                          d="M12 2l1.2 3.6L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.4L12 2zm8 10l.8 2.4 2.4.8-2.4.8L20 19l-.8-2.4L17 16l2.4-.8L20 12zM4 14l.7 2 2 .7-2 .7L4 19l-.7-2-2-.7 2-.7L4 14z"
+                        />
+                      </svg>
+                    </span>
+                    <h3 class="collections-tip-title">Growth Tip</h3>
+                  </div>
+                  <p id="collectionsGrowthTip" class="collections-tip-body">
+                    Plants grow best with consistent silence. Complete two 25-minute sessions today to unlock stage 2.
+                  </p>
+                </div>
+
+                <div class="collections-rank-card">
+                  <h3 class="collections-rank-title">Arboretum Rank</h3>
+                  <p id="collectionsRankSubtitle" class="collections-rank-sub">Novice Caretaker</p>
+                  <div class="collections-rank-stat">
+                    <span id="collectionsRankSessions" class="collections-rank-num">03</span>
+                    <span class="collections-rank-caption">Sessions to next rank</span>
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+            <section class="collections-arboretum" aria-labelledby="collectionsArboretumHeading">
+              <div class="collections-arboretum-head">
+                <h2 id="collectionsArboretumHeading" class="collections-arboretum-title">Your Arboretum</h2>
+                <div class="collections-filters" role="group" aria-label="Filter plants">
+                  <button type="button" class="collections-filter-chip is-active" data-collections-filter="all">
+                    All Types
+                  </button>
+                  <button type="button" class="collections-filter-chip" data-collections-filter="completed">
+                    Completed
+                  </button>
+                  <button type="button" class="collections-filter-chip" data-collections-filter="locked">
+                    Locked
+                  </button>
+                </div>
+              </div>
+
+              <div class="collections-gallery" id="collectionsGallery">
+                <article
+                  class="collections-plant-card collections-plant-card--done"
+                  data-collection-status="completed"
+                  data-collection-name="sakura"
+                >
+                  <div class="collections-plant-card-head">
+                    <div>
+                      <h3 class="collections-plant-title">Sakura</h3>
+                      <p class="collections-plant-tagline">The Graceful Bloom</p>
+                    </div>
+                    <span class="collections-plant-check" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M9 16.2l-3.5-3.5-1.4 1.4L9 19 20.5 7.5l-1.4-1.4z"></path>
+                      </svg>
+                    </span>
+                  </div>
+                  <div class="collections-plant-photo">
+                    <img
+                      src="https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=560&h=560&q=80"
+                      width="280"
+                      height="280"
+                      alt=""
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="collections-growth-stages" role="list">
+                    <span class="collections-stage-icon" role="listitem" title="Seedling">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 22c-4-4-8-6-8-8s8-4 8-8 8 6 8 8-4 4-8 8z"></path>
+                      </svg>
+                    </span>
+                    <span class="collections-stage-icon" role="listitem" title="Sapling">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 3 8 10h2.5L7 18h4v3h2v-3h4l-3.5-8H15z"></path>
+                      </svg>
+                    </span>
+                    <span class="collections-stage-icon is-active" role="listitem" title="Mature">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 2l4 4h-1.5v3c1.1 1.1 2.9 2.9 1.1 2.9H9.4c-1.8 0 0-1.8 1.1-2.9V6H8.5L12 2z"></path>
+                        <path d="M12 10v12"></path>
+                      </svg>
+                    </span>
+                    <span class="collections-stage-icon" role="listitem" title="Fruiting">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 3c2 4 6 6 6 6s-4 4-6 4-6-4-6-4 4-2 6-6z"></path>
+                        <circle cx="10" cy="8" r="1.2"></circle>
+                        <circle cx="14" cy="9" r="1.2"></circle>
+                      </svg>
+                    </span>
+                  </div>
+                </article>
+
+                <article
+                  class="collections-plant-card collections-plant-card--progress"
+                  data-collection-status="progress"
+                  data-collection-name="bonsai"
+                >
+                  <div class="collections-plant-card-head">
+                    <div>
+                      <h3 class="collections-plant-title">Bonsai</h3>
+                      <p class="collections-plant-tagline">The Patient Keeper</p>
+                    </div>
+                    <span class="collections-plant-pill">In progress</span>
+                  </div>
+                  <div class="collections-plant-photo">
+                    <img
+                      src="https://images.unsplash.com/photo-1597055187612-4adae1e0e119?auto=format&fit=crop&w=560&h=560&q=80"
+                      width="280"
+                      height="280"
+                      alt=""
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="collections-growth-stages" role="list">
+                    <span class="collections-stage-icon" role="listitem" title="Seedling">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 22c-4-4-8-6-8-8s8-4 8-8 8 6 8 8-4 4-8 8z"></path>
+                      </svg>
+                    </span>
+                    <span class="collections-stage-icon is-active" role="listitem" title="Sapling">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 3 8 10h2.5L7 18h4v3h2v-3h4l-3.5-8H15z"></path>
+                      </svg>
+                    </span>
+                    <span class="collections-stage-icon" role="listitem" title="Mature">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 2l4 4h-1.5v3c1.1 1.1 2.9 2.9 1.1 2.9H9.4c-1.8 0 0-1.8 1.1-2.9V6H8.5L12 2z"></path>
+                        <path d="M12 10v12"></path>
+                      </svg>
+                    </span>
+                    <span class="collections-stage-icon" role="listitem" title="Fruiting">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 3c2 4 6 6 6 6s-4 4-6 4-6-4-6-4 4-2 6-6z"></path>
+                        <circle cx="10" cy="8" r="1.2"></circle>
+                        <circle cx="14" cy="9" r="1.2"></circle>
+                      </svg>
+                    </span>
+                  </div>
+                </article>
+
+                <article
+                  class="collections-plant-card collections-plant-card--locked"
+                  data-collection-status="locked"
+                  data-collection-name="mystery"
+                >
+                  <div class="collections-plant-card-head">
+                    <div>
+                      <h3 class="collections-plant-title">???</h3>
+                      <p class="collections-plant-tagline">Requires Rank 2</p>
+                    </div>
+                  </div>
+                  <div class="collections-plant-photo collections-plant-photo--locked">
+                    <div class="collections-lock-overlay">
+                      <span class="collections-lock-circle">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path
+                            d="M17 11V8a5 5 0 0 0-10 0v3H5v10h14V11h-2zm-8-3a3 3 0 0 1 6 0v3H9V8z"
+                          ></path>
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="collections-growth-stages collections-growth-stages--muted" role="presentation">
+                    <span class="collections-stage-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 22c-4-4-8-6-8-8s8-4 8-8 8 6 8 8-4 4-8 8z"></path>
+                      </svg>
+                    </span>
+                    <span class="collections-stage-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 3 8 10h2.5L7 18h4v3h2v-3h4l-3.5-8H15z"></path>
+                      </svg>
+                    </span>
+                    <span class="collections-stage-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 2l4 4h-1.5v3c1.1 1.1 2.9 2.9 1.1 2.9H9.4c-1.8 0 0-1.8 1.1-2.9V6H8.5L12 2z"></path>
+                        <path d="M12 10v12"></path>
+                      </svg>
+                    </span>
+                    <span class="collections-stage-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 3c2 4 6 6 6 6s-4 4-6 4-6-4-6-4 4-2 6-6z"></path>
+                        <circle cx="10" cy="8" r="1.2"></circle>
+                        <circle cx="14" cy="9" r="1.2"></circle>
+                      </svg>
+                    </span>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      <button id="fabButton" class="fab" type="button" aria-label="Add task or event">+</button>
+    </div>
+
+    <dialog id="composerDialog" class="dialog-shell">
+      <div class="dialog-card">
+        <div class="dialog-header">
+          <div>
+            <h2 id="composerTitle">Add to the scroll</h2>
+            <p class="dialog-copy">Create a flexible task or a fixed appointment without leaving the dashboard.</p>
+          </div>
+          <button id="closeComposerBtn" class="ghost-icon" type="button" aria-label="Close dialog">x</button>
+        </div>
+
+        <div class="mode-switch">
+          <button id="taskModeBtn" class="mode-button active" type="button">Task</button>
+          <button id="fixedModeBtn" class="mode-button" type="button">Commitment</button>
+        </div>
+
+        <form id="quickTaskForm" class="dialog-form">
+          <label>
+            <span>Task name</span>
+            <input id="quickTaskName" type="text" required placeholder="MRes thesis writing" />
+          </label>
+          <div class="dialog-grid">
+            <label>
+              <span>Duration</span>
+              <input id="quickTaskDuration" type="number" inputmode="numeric" step="1" value="0" />
+            </label>
+            <label>
+              <span>Deadline</span>
+              <input id="quickTaskDeadline" type="datetime-local" />
+            </label>
+          </div>
+          <div class="check-row">
+            <label><input id="quickTaskImportant" type="checkbox" checked /> Important</label>
+            <label><input id="quickTaskUrgent" type="checkbox" /> Urgent</label>
+            <div class="check-row-help">
+              <button
+                id="taskFlagsHelpBtn"
+                class="check-row-help-btn"
+                type="button"
+                aria-label="How Important and Urgent affect task placement"
+                aria-describedby="taskFlagsHelpPanel"
+              >
+                i
+              </button>
+              <div id="taskFlagsHelpPanel" class="check-row-help-panel" role="note">
+                <strong>How this decides the matrix box</strong>
+                <p>
+                  Tick <b>Important</b> for tasks that strongly support your goals.
+                  <br />
+                  Tick <b>Urgent</b> for tasks that need attention very soon.
+                </p>
+                <p><i>"Important + Urgent"</i> -> Do</p>
+                <p><i>"Important + Not Urgent"</i> -> Schedule</p>
+                <p><i>"Not Important + Urgent"</i> -> Delegate</p>
+                <p><i>"Not Important + Not Urgent"</i> -> Eliminate</p>
+              </div>
+            </div>
+          </div>
+          <button type="submit">Add task bubble</button>
+        </form>
+
+        <form id="fixedForm" class="dialog-form" hidden>
+          <label>
+            <span>Event title</span>
+            <input id="fixedTitle" type="text" required placeholder="Supervisor Meeting" />
+          </label>
+          <div class="dialog-grid fixed-grid-2">
+            <label>
+              <span>Location</span>
+              <input id="fixedLocation" type="text" placeholder="Science Block, Room 402" />
+            </label>
+            <label>
+              <span>Meeting link</span>
+              <input id="fixedLink" type="url" placeholder="https://zoom.us/j/..." />
+            </label>
+          </div>
+          <div class="dialog-grid fixed-grid-2">
+            <label>
+              <span>Start date</span>
+              <input id="fixedStartDate" type="date" required />
+            </label>
+            <label>
+              <span>Start time</span>
+              <input id="fixedStart" type="time" required />
+            </label>
+            <label>
+              <span>End date</span>
+              <input id="fixedEndDate" type="date" required />
+            </label>
+            <label>
+              <span>End time</span>
+              <input id="fixedEnd" type="time" required />
+            </label>
+          </div>
+          <div class="check-row fixed-options-row">
+            <label><input id="fixedAllDay" type="checkbox" /> All day</label>
+            <label><input id="fixedRecurring" type="checkbox" /> Recurring</label>
+          </div>
+          <div id="fixedRecurringFields" class="fixed-recurring-fields" hidden>
+            <div class="fixed-repeat-days" id="fixedRepeatDays">
+              <label><input type="checkbox" value="Monday" /> M</label>
+              <label><input type="checkbox" value="Tuesday" /> T</label>
+              <label><input type="checkbox" value="Wednesday" /> W</label>
+              <label><input type="checkbox" value="Thursday" /> T</label>
+              <label><input type="checkbox" value="Friday" /> F</label>
+              <label><input type="checkbox" value="Saturday" /> S</label>
+              <label><input type="checkbox" value="Sunday" /> S</label>
+            </div>
+            <label>
+              <span>Repeat until (optional)</span>
+              <input id="fixedRepeatUntil" type="date" />
+            </label>
+          </div>
+          <button type="submit">Save commitment</button>
+        </form>
+      </div>
+    </dialog>
+
+    <dialog id="rhythmDialog" class="dialog-shell">
+      <div class="dialog-card">
+        <div class="dialog-header">
+          <div>
+            <h2>Daily Rhythm</h2>
+            <p class="dialog-copy">Tune wake and sleep times so suggestions sit inside your natural energy window.</p>
+          </div>
+          <button id="cancelRhythmBtn" class="ghost-icon" type="button" aria-label="Close rhythm">x</button>
+        </div>
+        <form id="rhythmForm" class="dialog-form">
+          <div class="dialog-grid">
+            <label>
+              <span>Wake time</span>
+              <input id="rhythmWake" type="time" required />
+            </label>
+            <label>
+              <span>Sleep time</span>
+              <input id="rhythmSleep" type="time" required />
+            </label>
+          </div>
+          <button type="submit">Save rhythm</button>
+        </form>
+      </div>
+    </dialog>
+
+    <dialog id="pomodoroDialog" class="dialog-shell pomodoro-dialog-shell">
+      <div class="dialog-card pomodoro-card">
+        <div class="dialog-header pomodoro-header">
+          <div>
+            <h2>Pomodoro</h2>
+            <p class="dialog-copy">Focus in gentle blocks. Adjust lengths to match your rhythm.</p>
+          </div>
+          <button id="pomodoroCloseBtn" class="ghost-icon" type="button" aria-label="Close Pomodoro">x</button>
+        </div>
+
+        <div class="pomodoro-ring-area">
+          <div class="pomodoro-ring-wrap">
+            <svg class="pomodoro-ring-svg" viewBox="0 0 100 100" aria-hidden="true">
+              <circle class="pomodoro-ring-track" cx="50" cy="50" r="42" pathLength="100"></circle>
+              <circle
+                id="pomodoroRingArc"
+                class="pomodoro-ring-arc"
+                cx="50"
+                cy="50"
+                r="42"
+                pathLength="100"
+                transform="rotate(-90 50 50)"
+              ></circle>
+            </svg>
+            <div class="pomodoro-ring-center">
+              <span id="pomodoroTimeDisplay" class="pomodoro-time-digits">25:00</span>
+              <span id="pomodoroPhaseLabel" class="pomodoro-phase-label">Ready</span>
+              <span id="pomodoroCyclesLabel" class="pomodoro-cycles">Cycles today: <strong id="pomodoroCyclesCount">0</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pomodoro-presets" role="group" aria-label="Quick presets">
+          <button type="button" class="pomodoro-preset" data-work="25" data-break="5">25 / 5</button>
+          <button type="button" class="pomodoro-preset" data-work="50" data-break="10">50 / 10</button>
+          <button type="button" class="pomodoro-preset" data-work="15" data-break="3">15 / 3</button>
+        </div>
+
+        <div class="pomodoro-sliders">
+          <label class="pomodoro-slider-row">
+            <span class="pomodoro-slider-label">Focus length</span>
+            <span class="pomodoro-slider-value"><span id="pomodoroWorkVal">25</span> min</span>
+            <input id="pomodoroWorkRange" type="range" min="5" max="90" step="1" value="25" />
+          </label>
+          <label class="pomodoro-slider-row">
+            <span class="pomodoro-slider-label">Break length</span>
+            <span class="pomodoro-slider-value"><span id="pomodoroBreakVal">5</span> min</span>
+            <input id="pomodoroBreakRange" type="range" min="1" max="30" step="1" value="5" />
+          </label>
+        </div>
+
+        <div class="pomodoro-actions">
+          <button id="pomodoroStartBtn" type="button" class="pomodoro-btn pomodoro-btn-primary">Start</button>
+          <button id="pomodoroPauseBtn" type="button" class="pomodoro-btn pomodoro-btn-ghost" disabled>Pause</button>
+          <button id="pomodoroResetBtn" type="button" class="pomodoro-btn pomodoro-btn-ghost">Reset</button>
+          <button id="pomodoroSkipBtn" type="button" class="pomodoro-btn pomodoro-btn-skip">Skip phase</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="profileDialog" class="dialog-shell">
+      <div class="dialog-card profile-dialog-card">
+        <div class="dialog-header">
+          <div>
+            <h2>Profile</h2>
+            <p class="dialog-copy">Your Kanso identity and quick links.</p>
+          </div>
+          <button id="closeProfileBtn" class="ghost-icon" type="button" aria-label="Close profile">x</button>
+        </div>
+        <div class="profile-body">
+          <div class="profile-hero">
+            <span class="profile-avatar-lg">DR</span>
+            <div>
+              <strong>MRes Student</strong>
+              <p>The Living Scroll</p>
+            </div>
+          </div>
+          <button id="profileRhythmBtn" class="profile-primary-btn" type="button">Edit daily rhythm</button>
+          <button id="profileDashboardBtn" class="profile-ghost-btn" type="button">Back to dashboard</button>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="assets/vendor/three/three.min.js"></script>
+    <script src="assets/vendor/three/GLTFLoader.js"></script>
+    <script src="assets/vendor/three/OrbitControls.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
