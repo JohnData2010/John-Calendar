@@ -1,124 +1,882 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kanso Planner</title>
+    <title>Kanso - The Living Scroll</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="onboarding" class="overlay">
-      <section class="overlay-card">
-        <h2>🌤️ Set your daily rhythm first</h2>
-        <p>Before adding tasks or generating schedule, tell the app your normal wake/sleep time.</p>
-        <form id="profileForm" class="form-grid">
-          <label>Wake up time <input id="wakeTime" type="time" required /></label>
-          <label>Sleep time <input id="sleepTime" type="time" required /></label>
-          <button type="submit">Save rhythm & start</button>
-        </form>
-      </section>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <h1>Kanso</h1>
+          <p>The Living Scroll</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <button class="nav-item active" type="button" data-nav="dashboard">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z"></path>
+              </svg>
+            </span>
+            <span>Dashboard</span>
+          </button>
+          <button class="nav-item" type="button" id="journalBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 4h9a4 4 0 0 1 4 4v12H9a4 4 0 0 0-4 0zm11 16V8a2 2 0 0 0-2-2H7v12a4.8 4.8 0 0 1 2-.4zM18.7 3.3l2 2-7.9 7.9-2.7.7.7-2.7z"></path>
+              </svg>
+            </span>
+            <span>Journal</span>
+          </button>
+          <button class="nav-item" type="button" id="weeklyBoardBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 5h3v14H3zM8 5h3v14H8zM13 5h3v14h-3zM18 5h3v14h-3z"></path>
+              </svg>
+            </span>
+            <span>Weekly Board</span>
+          </button>
+          <button class="nav-item" type="button" id="goalsBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 4V2h10v2h4v4c0 3.2-2.1 5.9-5 6.7V18h3v2H5v-2h3v-3.3C5.1 13.9 3 11.2 3 8V4h4zm0 2H5v2c0 1.7.8 3.2 2.1 4.2C7 11.5 7 10.8 7 10V6zm12 0h-2v4c0 .8 0 1.5-.1 2.2C18.2 11.2 19 9.7 19 8V6z"></path>
+              </svg>
+            </span>
+            <span>Goals</span>
+          </button>
+          <button class="nav-item" type="button" id="openMatrixBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"></path>
+              </svg>
+            </span>
+            <span>Eisenhower Matrix</span>
+          </button>
+        </nav>
+
+        <button id="smartSchedulerBtn" class="smart-button" type="button">Smart Scheduler</button>
+
+        <div class="sidebar-footer">
+          <button class="nav-item footer-item" type="button" id="settingsBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19.4 13a7.8 7.8 0 0 0 0-2l2-1.5-2-3.5-2.4 1a7.6 7.6 0 0 0-1.7-1l-.3-2.6H9l-.3 2.6a7.6 7.6 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7.8 7.8 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7.6 7.6 0 0 0 1.7 1l.3 2.6h6l.3-2.6a7.6 7.6 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5zM12 15.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4z"></path>
+              </svg>
+            </span>
+            <span>Settings</span>
+          </button>
+          <button class="nav-item footer-item" type="button" id="supportBtn">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 16h-1.5v-1.5H12zm1.8-6.4-.7.5c-.6.4-.8.7-.8 1.4v.4h-1.5v-.5c0-1.1.3-1.8 1.3-2.5l.8-.5a1.6 1.6 0 0 0 .7-1.3 1.9 1.9 0 0 0-3.8 0H8.3a3.4 3.4 0 0 1 6.8 0 3 3 0 0 1-1.3 2.5z"></path>
+              </svg>
+            </span>
+            <span>Support</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header id="appTopbar" class="topbar">
+          <label class="search-shell" for="searchInput">
+            <span class="search-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M10 4a6 6 0 1 0 3.9 10.6l4.2 4.2 1.4-1.4-4.2-4.2A6 6 0 0 0 10 4zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"></path>
+              </svg>
+            </span>
+            <input id="searchInput" type="search" placeholder="Search tasks..." />
+          </label>
+
+          <div class="topbar-actions">
+            <button class="icon-button" type="button" aria-label="Notifications">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 22a2.5 2.5 0 0 0 2.4-2h-4.8A2.5 2.5 0 0 0 12 22zm6-6V11a6 6 0 0 0-4.5-5.8V4a1.5 1.5 0 0 0-3 0v1.2A6 6 0 0 0 6 11v5l-2 2v1h16v-1z"></path>
+              </svg>
+            </button>
+            <button class="icon-button" type="button" aria-label="Appearance">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 13a8 8 0 1 1-10-10 7 7 0 1 0 10 10z"></path>
+              </svg>
+            </button>
+            <button class="avatar-button" type="button" aria-label="Profile">DR</button>
+          </div>
+        </header>
+
+        <section id="dashboardView" class="app-view">
+          <div class="dashboard">
+            <section class="dashboard-main">
+              <div class="main-header">
+                <div>
+                  <h2>The Living Scroll</h2>
+                  <p id="scrollDateText" class="scroll-subtitle"></p>
+                </div>
+                <div class="scroll-controls">
+                  <button id="prevDay" class="circle-button" type="button" aria-label="Previous day">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M14.7 6.3 9 12l5.7 5.7-1.4 1.4L6.2 12l7.1-7.1z"></path>
+                    </svg>
+                  </button>
+                  <button id="nextDay" class="circle-button" type="button" aria-label="Next day">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M9.3 17.7 15 12 9.3 6.3l1.4-1.4 7.1 7.1-7.1 7.1z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <section class="living-scroll-panel" id="weeklyBoardSection">
+                <div id="livingScroll" class="living-scroll"></div>
+              </section>
+            </section>
+
+            <aside class="insights-rail">
+              <section class="insight-card rhythm-card" id="goalsSection">
+                <div class="insight-head">
+                  <span class="leaf-badge">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M19 3C10 3 5 8.7 5 16c0 2 .6 3.8 1.7 5 .2-2 1-4 2.4-5.6 1.7-1.9 4-3.3 6.9-4.2-2.7 1.7-4.7 3.5-6 5.4A12 12 0 0 0 8.4 21c7 0 11.6-5.1 11.6-11.5 0-2.4-.4-4.3-1-6.5z"></path>
+                    </svg>
+                  </span>
+                  <h3>Weekly Rhythm</h3>
+                </div>
+                <div id="weeklyRhythm" class="progress-stack"></div>
+                <div class="momentum-row">
+                  <span class="momentum-chip done">Y</span>
+                  <span class="momentum-chip done">Y</span>
+                  <span class="momentum-chip">W</span>
+                  <span class="momentum-text">Keep the momentum</span>
+                </div>
+              </section>
+
+              <section class="insight-card daily-card" id="dailyRhythmCard">
+                <div class="insight-head">
+                  <h3>Daily Rhythm</h3>
+                  <span class="moon-mark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 13a8 8 0 1 1-10-10 7 7 0 1 0 10 10z"></path>
+                    </svg>
+                  </span>
+                </div>
+                <div class="rhythm-icons">
+                  <div class="rhythm-box">
+                    <svg class="sun-icon" viewBox="0 0 64 64" aria-hidden="true">
+                      <circle cx="32" cy="32" r="10"></circle>
+                      <path d="M32 10v8M32 46v8M10 32h8M46 32h8M16.4 16.4l5.7 5.7M41.9 41.9l5.7 5.7M16.4 47.6l5.7-5.7M41.9 22.1l5.7-5.7"></path>
+                    </svg>
+                  </div>
+                  <div class="rhythm-line">
+                    <span class="rhythm-dot"></span>
+                  </div>
+                  <div class="rhythm-box">
+                    <svg class="sleep-icon" viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M44.8 14.7a18.8 18.8 0 1 0 4.5 37 16.7 16.7 0 1 1-4.5-37z"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="rhythm-metrics">
+                  <div>
+                    <span class="metric-label">Wake</span>
+                    <strong id="wakeMetric"></strong>
+                  </div>
+                  <div>
+                    <span class="metric-label">Sleep</span>
+                    <strong id="sleepMetric"></strong>
+                  </div>
+                </div>
+              </section>
+
+              <section class="insight-card zen-card">
+                <div class="insight-head">
+                  <h3>Zen Focus</h3>
+                </div>
+                <div id="zenFocusList" class="zen-list"></div>
+              </section>
+            </aside>
+          </div>
+        </section>
+
+        <section id="journalView" class="app-view hidden">
+          <div class="journal-page">
+            <aside class="journal-sidebar">
+              <div class="journal-brand">
+                <h2>The Living Scroll</h2>
+                <p>Wabi-Sabi Productivity</p>
+              </div>
+
+              <nav class="journal-nav">
+                <button id="journalNavMain" class="journal-nav-item active" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M5 4h9a4 4 0 0 1 4 4v12H9a4 4 0 0 0-4 0zm11 16V8a2 2 0 0 0-2-2H7v12a4.8 4.8 0 0 1 2-.4zM18.7 3.3l2 2-7.9 7.9-2.7.7.7-2.7z"></path>
+                    </svg>
+                  </span>
+                  <span>Journal</span>
+                </button>
+                <button id="journalNavIntentions" class="journal-nav-item" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="m12 2 1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6zM5 14l1 2.6L8.6 18 6 19l-1 2.6L4 19l-2.6-1L4 16.6zM18.5 13l1.1 2.9 2.9 1.1-2.9 1.1-1.1 2.9-1.1-2.9-2.9-1.1 2.9-1.1z"></path>
+                    </svg>
+                  </span>
+                  <span>Intentions</span>
+                </button>
+                <button id="journalNavArchive" class="journal-nav-item" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M4 5h16v4H4zm1 6h14v8H5zm5 2v2h4v-2z"></path>
+                    </svg>
+                  </span>
+                  <span>Archive</span>
+                </button>
+                <button id="journalNavReflections" class="journal-nav-item" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2C9 6.8 5 9 5 13a7 7 0 0 0 14 0c0-4-4-6.2-7-11z"></path>
+                    </svg>
+                  </span>
+                  <span>Reflections</span>
+                </button>
+              </nav>
+
+              <button id="journalNewEntryBtn" class="journal-entry-button" type="button">New Entry</button>
+
+              <div class="journal-sidebar-footer">
+                <button id="journalSettingsBtn" class="journal-footer-link" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M19.4 13a7.8 7.8 0 0 0 0-2l2-1.5-2-3.5-2.4 1a7.6 7.6 0 0 0-1.7-1l-.3-2.6H9l-.3 2.6a7.6 7.6 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7.8 7.8 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7.6 7.6 0 0 0 1.7 1l.3 2.6h6l.3-2.6a7.6 7.6 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5zM12 15.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4z"></path>
+                    </svg>
+                  </span>
+                  <span>Settings</span>
+                </button>
+                <button id="journalHelpBtn" class="journal-footer-link" type="button">
+                  <span class="journal-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 16h-1.5v-1.5H12zm1.8-6.4-.7.5c-.6.4-.8.7-.8 1.4v.4h-1.5v-.5c0-1.1.3-1.8 1.3-2.5l.8-.5a1.6 1.6 0 0 0 .7-1.3 1.9 1.9 0 0 0-3.8 0H8.3a3.4 3.4 0 0 1 6.8 0 3 3 0 0 1-1.3 2.5z"></path>
+                    </svg>
+                  </span>
+                  <span>Help</span>
+                </button>
+              </div>
+            </aside>
+
+            <section class="journal-main">
+              <div id="journalDailyPane">
+                <header class="journal-header">
+                  <div>
+                    <p id="journalDateLabel" class="journal-date-label"></p>
+                    <h2>Daily Reflection</h2>
+                  </div>
+                  <button id="journalArchiveBtn" class="journal-archive-status" type="button">
+                    <span class="journal-archive-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 3 3 12l2 2 7-7 7 7 2-2zM5 13h14v7H5z"></path>
+                      </svg>
+                    </span>
+                    <span id="journalArchiveText">Saved to Archive</span>
+                  </button>
+                </header>
+
+                <section id="journalIntentionsSection" class="journal-section">
+                  <div class="journal-section-head warm">
+                    <span class="journal-section-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 4a1 1 0 0 1 1 1v2.1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 12a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm8-5a1 1 0 0 1 1 1 1 1 0 0 1-1 1h-2.1a1 1 0 1 1 0-2zM6.1 11a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2zm10.2-4.8 1.5-1.5a1 1 0 1 1 1.4 1.4l-1.5 1.5a1 1 0 1 1-1.4-1.4zM6.2 16.3l1.5-1.5a1 1 0 1 1 1.4 1.4l-1.5 1.5a1 1 0 1 1-1.4-1.4zm11.6 1.4-1.5-1.5a1 1 0 1 1 1.4-1.4l1.5 1.5a1 1 0 1 1-1.4 1.4zM7.7 7.6 6.2 6.1a1 1 0 1 1 1.4-1.4l1.5 1.5a1 1 0 1 1-1.4 1.4z"></path>
+                      </svg>
+                    </span>
+                    <h3>Morning Intention</h3>
+                  </div>
+                  <textarea id="journalMorningInput" class="journal-panel journal-hero-panel" placeholder="What energy will you carry today?"></textarea>
+                </section>
+
+                <section id="journalGratitudeSection" class="journal-section">
+                  <div class="journal-section-head sage">
+                    <span class="journal-section-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 22C7 20 4 16.4 4 12a4 4 0 0 1 7-2.6A4 4 0 0 1 18 12c0 4.4-3 8-6 10z"></path>
+                      </svg>
+                    </span>
+                    <h3>Evening Gratitude</h3>
+                  </div>
+                  <div class="journal-gratitude-grid">
+                    <label class="journal-panel journal-gratitude-card">
+                      <span>One</span>
+                      <input id="journalGratitude1" type="text" placeholder="A small joy..." />
+                    </label>
+                    <label class="journal-panel journal-gratitude-card">
+                      <span>Two</span>
+                      <input id="journalGratitude2" type="text" placeholder="A person who helped..." />
+                    </label>
+                    <label class="journal-panel journal-gratitude-card">
+                      <span>Three</span>
+                      <input id="journalGratitude3" type="text" placeholder="A moment of peace..." />
+                    </label>
+                  </div>
+                </section>
+
+                <section id="journalNotesSection" class="journal-section">
+                  <div class="journal-section-head cool">
+                    <span class="journal-section-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="m4 16.5 9.8-9.8 3.5 3.5L7.5 20H4zm13.7-10.8 1.8-1.8a1.3 1.3 0 1 1 1.8 1.8l-1.8 1.8z"></path>
+                      </svg>
+                    </span>
+                    <h3>Mindful Notes</h3>
+                  </div>
+                  <textarea id="journalNotesInput" class="journal-notes-sheet" placeholder="Let your thoughts flow onto the page..."></textarea>
+                </section>
+
+                <div class="journal-rail">
+                  <button class="journal-rail-button" type="button" data-journal-target="journalIntentionsSection" aria-label="Go to intentions">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 4a8 8 0 1 0 8 8c0-5-8-8-8-8z"></path>
+                    </svg>
+                  </button>
+                  <button class="journal-rail-button" type="button" data-journal-target="journalGratitudeSection" aria-label="Go to gratitude">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 22C7 20 4 16.4 4 12a4 4 0 0 1 7-2.6A4 4 0 0 1 18 12c0 4.4-3 8-6 10z"></path>
+                    </svg>
+                  </button>
+                  <button class="journal-rail-button" type="button" data-journal-target="journalNotesSection" aria-label="Go to notes">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 2C9 6.8 5 9 5 13a7 7 0 0 0 14 0c0-4-4-6.2-7-11z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div id="journalReflectionsPane" class="hidden">
+                <header class="reflections-header">
+                  <div class="reflections-header-left">
+                    <button id="journalReflectionsBackBtn" class="reflections-back" type="button">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M14.7 6.3 9 12l5.7 5.7-1.4 1.4L6.2 12l7.1-7.1z"></path>
+                      </svg>
+                    </button>
+                    <h2>Reflections</h2>
+                  </div>
+                  <div class="reflections-header-actions">
+                    <button id="reflectionsFilterBtn" class="reflections-icon-btn" type="button" aria-label="Filter reflections">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h16v2H4zm3 5h10v2H7zm3 5h4v2h-4z"></path>
+                      </svg>
+                    </button>
+                    <button id="reflectionsMoreBtn" class="reflections-icon-btn" type="button" aria-label="More actions">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="5" r="1.8"></circle>
+                        <circle cx="12" cy="12" r="1.8"></circle>
+                        <circle cx="12" cy="19" r="1.8"></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </header>
+
+                <section class="reflections-hero-grid">
+                  <article class="reflections-growth-card">
+                    <h3>Timeline of Growth</h3>
+                    <p>Your emotional landscape over the last thirty sunrises, captured in organic rhythm.</p>
+                    <div id="reflectionsBars" class="reflections-bars"></div>
+                  </article>
+
+                  <aside class="reflections-focus-card">
+                    <span class="reflections-eyebrow">Primary Focus</span>
+                    <h3 id="reflectionsPrimaryFocus">Creative Stillness</h3>
+                    <blockquote id="reflectionsQuote">"You are most present when the mind is allowed to simply observe without judgment."</blockquote>
+                    <div class="reflections-insight-id">Insight #<span id="reflectionsInsightId">42</span></div>
+                  </aside>
+                </section>
+
+                <section class="reflections-insights-section">
+                  <div class="reflections-section-head">
+                    <div>
+                      <h3>Recent Insights</h3>
+                      <p>Threads of wisdom pulled from your daily narrative.</p>
+                    </div>
+                    <button id="reflectionsViewAllBtn" class="reflections-link-button" type="button">View All Insights</button>
+                  </div>
+                  <div id="reflectionsInsightsGrid" class="reflections-insights-grid"></div>
+                </section>
+
+                <section id="reflectionsReviewSection" class="reflections-review-card">
+                  <div class="reflections-review-copy">
+                    <h3>Weekly Review</h3>
+                    <p>Take a moment to breathe and reflect on the week that has passed. There are no wrong answers.</p>
+
+                    <label class="reflections-question">
+                      <span>Question One</span>
+                      <strong>What brought you the most peace this week?</strong>
+                      <textarea id="reflectionAnswerOne" placeholder="Soft rain against the window during tea..."></textarea>
+                    </label>
+
+                    <label class="reflections-question">
+                      <span>Question Two</span>
+                      <strong>What did you learn about your rhythm?</strong>
+                      <textarea id="reflectionAnswerTwo" placeholder="I work best in short, intense bursts..."></textarea>
+                    </label>
+
+                    <button id="completeReflectionBtn" class="complete-reflection-btn" type="button">Complete Reflection</button>
+                  </div>
+
+                  <div class="reflections-review-visual">
+                    <div class="reflection-visual-card"></div>
+                    <div class="reflection-quote-card">
+                      <span>✦</span>
+                      <p>"Growth is a slow process, but it is always happening."</p>
+                    </div>
+                  </div>
+                </section>
+
+                <footer class="reflections-footer">Finely Crafted Reflections • Komorebi</footer>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section id="weeklyView" class="app-view hidden">
+          <div class="weekly-page">
+            <aside class="weekly-sidebar">
+              <div class="weekly-brand">
+                <h2>Zen Planner</h2>
+              </div>
+
+              <nav class="weekly-nav">
+                <button class="weekly-nav-item" type="button" id="weeklyDashboardBtn">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z"></path>
+                    </svg>
+                  </span>
+                  <span>Dashboard</span>
+                </button>
+                <button class="weekly-nav-item active" type="button">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M3 5h3v14H3zM8 5h3v14H8zM13 5h3v14h-3zM18 5h3v14h-3z"></path>
+                    </svg>
+                  </span>
+                  <span>Weekly Board</span>
+                </button>
+                <button class="weekly-nav-item" type="button" id="weeklyGoalsBtn">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2a8.5 8.5 0 1 0 8.5 8.5A8.5 8.5 0 0 0 12 2zm0 2a6.5 6.5 0 0 1 6.3 5H12zm0 15a6.5 6.5 0 0 1-6.3-5H12z"></path>
+                    </svg>
+                  </span>
+                  <span>Goals</span>
+                </button>
+                <button class="weekly-nav-item" type="button" id="weeklyMatrixBtn">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"></path>
+                    </svg>
+                  </span>
+                  <span>Matrix</span>
+                </button>
+              </nav>
+
+              <div class="weekly-sidebar-bottom">
+                <button class="weekly-side-link" type="button">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M19.4 13a7.8 7.8 0 0 0 0-2l2-1.5-2-3.5-2.4 1a7.6 7.6 0 0 0-1.7-1l-.3-2.6H9l-.3 2.6a7.6 7.6 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7.8 7.8 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7.6 7.6 0 0 0 1.7 1l.3 2.6h6l.3-2.6a7.6 7.6 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5zM12 15.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4z"></path>
+                    </svg>
+                  </span>
+                  <span>Settings</span>
+                </button>
+                <button class="weekly-side-link" type="button">
+                  <span class="weekly-nav-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 16h-1.5v-1.5H12zm1.8-6.4-.7.5c-.6.4-.8.7-.8 1.4v.4h-1.5v-.5c0-1.1.3-1.8 1.3-2.5l.8-.5a1.6 1.6 0 0 0 .7-1.3 1.9 1.9 0 0 0-3.8 0H8.3a3.4 3.4 0 0 1 6.8 0 3 3 0 0 1-1.3 2.5z"></path>
+                    </svg>
+                  </span>
+                  <span>Help</span>
+                </button>
+
+                <div class="weekly-profile">
+                  <span class="weekly-profile-avatar">DR</span>
+                  <div>
+                    <strong>MRes Student</strong>
+                    <p>Academic Year</p>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <section class="weekly-main">
+              <header class="weekly-top">
+                <button id="weeklyProfileBtn" class="weekly-profile-button" type="button" aria-label="Profile">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z"></path>
+                  </svg>
+                </button>
+              </header>
+
+              <section class="weekly-calendar-header">
+                <div>
+                  <h3 id="weeklyMonthLabel">March <span>2024</span></h3>
+                </div>
+                <div class="weekly-strip-controls">
+                  <button id="weeklyPrevBtn" class="weekly-strip-arrow" type="button" aria-label="Previous week">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M14.7 6.3 9 12l5.7 5.7-1.4 1.4L6.2 12l7.1-7.1z"></path>
+                    </svg>
+                  </button>
+                  <button id="weeklyNextBtn" class="weekly-strip-arrow" type="button" aria-label="Next week">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9.3 17.7 15 12 9.3 6.3l1.4-1.4 7.1 7.1-7.1 7.1z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </section>
+
+              <div id="weeklyDateStrip" class="weekly-date-strip"></div>
+              <div id="weeklyBoardGrid" class="weekly-board-grid"></div>
+            </section>
+
+            <button id="weeklyFabBtn" class="weekly-fab" type="button" aria-label="Add entry">+</button>
+          </div>
+        </section>
+
+        <section id="matrixView" class="app-view hidden">
+          <div class="matrix-page">
+            <section class="matrix-main">
+              <header class="matrix-hero">
+                <div class="matrix-hero-top">
+                  <button id="matrixNewEntryBtn" class="matrix-entry-button" type="button">+ New Entry</button>
+                </div>
+                <h2>Matrix</h2>
+                <p>The Living Scroll prioritizes peace over pressure. Balance your focus across these four organic dimensions.</p>
+              </header>
+
+              <div class="matrix-grid-page">
+                <section class="matrix-panel do-panel" data-zone="q1">
+                  <div class="matrix-panel-head">
+                    <h3>Do</h3>
+                    <span class="matrix-panel-mark">⚡</span>
+                  </div>
+                  <div class="matrix-task-list" data-page-drop="q1"></div>
+                </section>
+
+                <section class="matrix-panel schedule-panel" data-zone="q2">
+                  <div class="matrix-panel-head">
+                    <h3>Schedule</h3>
+                    <span class="matrix-panel-mark">🗓</span>
+                  </div>
+                  <div class="matrix-task-list" data-page-drop="q2"></div>
+                </section>
+
+                <section class="matrix-panel delegate-panel" data-zone="q3">
+                  <div class="matrix-panel-head">
+                    <h3>Delegate</h3>
+                    <span class="matrix-panel-mark">👥</span>
+                  </div>
+                  <div class="matrix-task-list" data-page-drop="q3"></div>
+                </section>
+
+                <section class="matrix-panel eliminate-panel" data-zone="q4">
+                  <div class="matrix-panel-head">
+                    <h3>Eliminate</h3>
+                    <span class="matrix-panel-mark">🗑</span>
+                  </div>
+                  <div class="matrix-task-list" data-page-drop="q4"></div>
+                </section>
+              </div>
+
+              <section class="clarity-pulse">
+                <div class="clarity-ring">
+                  <div class="clarity-ring-inner">
+                    <strong id="clarityValue">68%</strong>
+                  </div>
+                </div>
+                <div class="clarity-copy">
+                  <h3>Clarity Pulse</h3>
+                  <p id="clarityText">You've cleared the most pressing matters in your Do zone. Your cognitive load is breathing naturally.</p>
+                </div>
+                <button class="clarity-button" type="button">Reflect</button>
+              </section>
+            </section>
+          </div>
+        </section>
+
+        <section id="goalsView" class="app-view hidden">
+          <div class="goals-page">
+            <aside class="goals-sidebar">
+              <div class="goals-brand">
+                <h2>Kanso</h2>
+                <p>The Living Scroll</p>
+              </div>
+
+              <div class="goals-side-list">
+                <button class="goals-side-item" type="button">
+                  <span class="goals-side-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M7 3h10a2 2 0 0 1 2 2v14l-7-3-7 3V5a2 2 0 0 1 2-2z"></path>
+                    </svg>
+                  </span>
+                  <span>Journal</span>
+                </button>
+                <button class="goals-side-item active" type="button">
+                  <span class="goals-side-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M8.2 7.4a2.6 2.6 0 1 1 3.7-3.7l1.3 1.3-1.8 1.8-1.3-1.3a.8.8 0 1 0-1.1 1.1l1.3 1.3-1.8 1.8-1.3-1.3zm7.6 9.2a2.6 2.6 0 1 1-3.7 3.7l-1.3-1.3 1.8-1.8 1.3 1.3a.8.8 0 1 0 1.1-1.1l-1.3-1.3 1.8-1.8 1.3 1.3zM7 17l10-10 1.8 1.8-10 10zM5.2 13.4l5.4 5.4-1.8 1.8-5.4-5.4z"></path>
+                    </svg>
+                  </span>
+                  <span>Habits</span>
+                </button>
+                <button class="goals-side-item" type="button">
+                  <span class="goals-side-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M5 4h14v3H5zm0 5h14v3H5zm0 5h14v3H5zm0 5h14v1H5z"></path>
+                    </svg>
+                  </span>
+                  <span>Study</span>
+                </button>
+                <button class="goals-side-item" type="button">
+                  <span class="goals-side-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M7.5 8.5A3.5 3.5 0 1 1 11 5v4H7.5a1.5 1.5 0 0 0 0 3H11v7H8.5A3.5 3.5 0 1 1 5 15.5V12a3.5 3.5 0 0 1 2.5-3.5zm9 0A3.5 3.5 0 0 0 13 5v4h3.5a1.5 1.5 0 0 1 0 3H13v7h2.5a3.5 3.5 0 1 0 3.5-3.5V12a3.5 3.5 0 0 0-2.5-3.5z"></path>
+                    </svg>
+                  </span>
+                  <span>Gym</span>
+                </button>
+              </div>
+
+              <button id="goalsNewEntryBtn" class="goals-entry-button" type="button">New Entry</button>
+
+              <div class="goals-profile">
+                <span class="goals-profile-avatar">AC</span>
+                <div>
+                  <strong>Alex Chen</strong>
+                  <p>MRES Student</p>
+                </div>
+              </div>
+            </aside>
+
+            <section class="goals-main">
+              <header class="goals-hero">
+                <button id="goalsBackBtn" class="goals-back" type="button">
+                  <span class="goals-back-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M14.7 5.3 8 12l6.7 6.7-1.4 1.4L5.2 12l8.1-8.1z"></path>
+                    </svg>
+                  </span>
+                  <span>Back</span>
+                </button>
+                <h2>Goals & Habits</h2>
+                <p>Cultivating discipline through soft rhythms. Your progress is a living scroll of intention and action.</p>
+              </header>
+
+              <div class="goals-grid">
+                <section class="goal-spotlight">
+                  <div class="goal-top">
+                    <div>
+                      <span class="goal-chip">Active Goal</span>
+                      <h3 id="goalSpotlightTitle">SQL Self-Study</h3>
+                      <p id="goalSpotlightMeta">3 sessions per week • Database Mastery</p>
+                    </div>
+                    <div class="goal-progress-ring">
+                      <strong id="goalProgressValue">66%</strong>
+                      <span>Progress</span>
+                    </div>
+                  </div>
+
+                  <div id="goalWeekMini" class="goal-week-mini"></div>
+
+                  <div class="goal-spotlight-footer">
+                    <div class="goal-avatars">
+                      <span class="goal-avatar"></span>
+                      <span class="goal-avatar plus">+2</span>
+                    </div>
+                    <button id="goalScheduleBtn" class="goal-schedule-button" type="button">
+                      <span class="button-spark" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M12 2l1.7 4.3L18 8l-4.3 1.7L12 14l-1.7-4.3L6 8l4.3-1.7zM19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9zM5 15l1.2 2.8L9 19l-2.8 1.2L5 23l-1.2-2.8L1 19l2.8-1.2z"></path>
+                        </svg>
+                      </span>
+                      <span>Schedule Me</span>
+                    </button>
+                  </div>
+                </section>
+
+                <aside class="quote-card">
+                  <div class="quote-mark">“</div>
+                  <blockquote>
+                    <p>"Nature does not hurry, yet everything is accomplished."</p>
+                    <footer>Lao Tzu</footer>
+                  </blockquote>
+                </aside>
+
+                <section class="gym-journey-card">
+                  <div class="journey-head">
+                    <div class="journey-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M7.5 8.5A3.5 3.5 0 1 1 11 5v4H7.5a1.5 1.5 0 0 0 0 3H11v7H8.5A3.5 3.5 0 1 1 5 15.5V12a3.5 3.5 0 0 1 2.5-3.5zm9 0A3.5 3.5 0 0 0 13 5v4h3.5a1.5 1.5 0 0 1 0 3H13v7h2.5a3.5 3.5 0 1 0 3.5-3.5V12a3.5 3.5 0 0 0-2.5-3.5z"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3>Gym Journey</h3>
+                      <p>4x per week</p>
+                    </div>
+                  </div>
+
+                  <div class="journey-metric">
+                    <div class="journey-row">
+                      <span>Strength Training</span>
+                      <strong id="strengthMetric">2/3 done</strong>
+                    </div>
+                    <div class="journey-track"><div id="strengthBar" class="journey-bar partial"></div></div>
+                  </div>
+
+                  <div class="journey-metric">
+                    <div class="journey-row">
+                      <span>Mobility Flow</span>
+                      <strong id="mobilityMetric">1/1 done</strong>
+                    </div>
+                    <div class="journey-track"><div id="mobilityBar" class="journey-bar full"></div></div>
+                  </div>
+
+                  <button id="journeyScheduleBtn" class="journey-button" type="button">
+                    <span class="button-spark" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 2l1.7 4.3L18 8l-4.3 1.7L12 14l-1.7-4.3L6 8l4.3-1.7zM19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9z"></path>
+                      </svg>
+                    </span>
+                    <span>Schedule Me</span>
+                  </button>
+                </section>
+
+                <section class="habit-consistency-card">
+                  <div class="habit-left">
+                    <div class="habit-copy">
+                      <h3>Habit Consistency</h3>
+                      <p>Your rhythm has stabilized over the last 14 days. Morning sessions are your peak performance window.</p>
+                    </div>
+                    <div class="habit-dots-wrap">
+                      <div id="habitDots" class="habit-dots"></div>
+                      <div class="habit-days">
+                        <span>Mon</span>
+                        <span>Sun</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="habit-right">
+                    <div class="habit-performer">
+                      <span class="performer-label">Top Performer</span>
+                      <h4 id="topPerformerTitle">Morning SQL Focus</h4>
+                      <p id="topPerformerText">92% completion rate before 9 AM</p>
+                    </div>
+                    <div class="habit-growth">
+                      <span class="habit-growth-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                          <path d="M4 16.5 9 11l3.4 3.4L20 7v4h2V4h-7v2h3.4l-6 6-3.4-3.4L2 15z"></path>
+                        </svg>
+                      </span>
+                      <span id="habitGrowthText">+12% from last week</span>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <footer class="engine-strip">
+                <span id="engineStripText">Kanso Smart Engine: Optimizing your schedule for Friday morning.</span>
+                <span class="engine-dot"></span>
+              </footer>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      <button id="fabButton" class="fab" type="button" aria-label="Add task or event">+</button>
     </div>
 
-    <header class="hero">
-      <p class="jp">簡素 • Calm, clear, focused</p>
-      <h1>🌸 Kanso Planner</h1>
-      <p>Japanese minimal style planner with Eisenhower Matrix + adaptive weekly time blocks.</p>
-      <div id="rhythmBadge" class="rhythm"></div>
-    </header>
-
-    <main class="container">
-      <section class="panel">
-        <div class="panel-head">
-          <h2>🗓️ Fixed commitments</h2>
-          <p>You can add, edit, or delete any fixed event.</p>
-        </div>
-
-        <form id="fixedForm" class="form-grid">
-          <input id="fixedTitle" required placeholder="Title (e.g., Supervisor meeting)" />
-          <select id="fixedDay" required></select>
-          <div class="split">
-            <input id="fixedStart" type="time" required />
-            <input id="fixedEnd" type="time" required />
+    <dialog id="composerDialog" class="dialog-shell">
+      <div class="dialog-card">
+        <div class="dialog-header">
+          <div>
+            <h2 id="composerTitle">Add to the scroll</h2>
+            <p class="dialog-copy">Create a flexible task or a fixed appointment without leaving the dashboard.</p>
           </div>
-          <button type="submit">Save fixed event</button>
-        </form>
-
-        <ul id="fixedList" class="list"></ul>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head">
-          <h2>🎯 Recurring goals</h2>
-          <p>For SQL, gym, reading and habits.</p>
+          <button id="closeComposerBtn" class="ghost-icon" type="button" aria-label="Close dialog">x</button>
         </div>
-        <form id="goalForm" class="form-grid">
-          <input id="goalName" required placeholder="Goal name" />
-          <input id="goalSessions" type="number" min="1" max="14" required placeholder="Sessions/week" />
-          <input id="goalDuration" type="number" min="30" max="240" step="15" required placeholder="Minutes/session" />
-          <select id="goalPriority">
-            <option value="high">High</option>
-            <option value="medium" selected>Medium</option>
-            <option value="low">Low</option>
-          </select>
-          <button type="submit">Add goal</button>
-        </form>
-        <ul id="goalList" class="list compact"></ul>
-      </section>
 
-      <section class="panel panel-wide">
-        <div class="panel-head">
-          <h2>🧭 Eisenhower Matrix</h2>
-          <p>New tasks + deadlines go here first.</p>
+        <div class="mode-switch">
+          <button id="taskModeBtn" class="mode-button active" type="button">Task</button>
+          <button id="fixedModeBtn" class="mode-button" type="button">Commitment</button>
         </div>
-        <form id="taskForm" class="form-grid">
-          <input id="taskName" required placeholder="Task name" />
-          <input id="taskDeadline" type="datetime-local" />
-          <input id="taskDuration" type="number" min="15" max="300" step="15" required placeholder="Estimated minutes" />
-          <div class="split">
-            <label><input id="taskImportant" type="checkbox" checked /> Important</label>
-            <label><input id="taskUrgent" type="checkbox" /> Urgent</label>
+
+        <form id="quickTaskForm" class="dialog-form">
+          <label>
+            <span>Task name</span>
+            <input id="quickTaskName" type="text" required placeholder="MRes thesis writing" />
+          </label>
+          <div class="dialog-grid">
+            <label>
+              <span>Duration</span>
+              <input id="quickTaskDuration" type="number" min="15" max="300" step="15" value="60" required />
+            </label>
+            <label>
+              <span>Deadline</span>
+              <input id="quickTaskDeadline" type="datetime-local" />
+            </label>
           </div>
-          <button type="submit">Add matrix task</button>
+          <div class="check-row">
+            <label><input id="quickTaskImportant" type="checkbox" checked /> Important</label>
+            <label><input id="quickTaskUrgent" type="checkbox" /> Urgent</label>
+          </div>
+          <button type="submit">Add task bubble</button>
         </form>
 
-        <div class="matrix">
-          <article class="quad q1"><h3>Do First</h3><div class="quad-items" data-q="q1"></div></article>
-          <article class="quad q2"><h3>Schedule</h3><div class="quad-items" data-q="q2"></div></article>
-          <article class="quad q3"><h3>Delegate</h3><div class="quad-items" data-q="q3"></div></article>
-          <article class="quad q4"><h3>Eliminate</h3><div class="quad-items" data-q="q4"></div></article>
-        </div>
-      </section>
+        <form id="fixedForm" class="dialog-form hidden">
+          <label>
+            <span>Event title</span>
+            <input id="fixedTitle" type="text" required placeholder="Supervisor Meeting" />
+          </label>
+          <div class="dialog-grid">
+            <label>
+              <span>Day</span>
+              <select id="fixedDay" required></select>
+            </label>
+            <label>
+              <span>Start</span>
+              <input id="fixedStart" type="time" required />
+            </label>
+            <label>
+              <span>End</span>
+              <input id="fixedEnd" type="time" required />
+            </label>
+          </div>
+          <button type="submit">Save commitment</button>
+        </form>
+      </div>
+    </dialog>
 
-      <section class="panel panel-wide">
-        <div class="panel-head">
-          <h2>⚙️ Planner controls</h2>
-          <p>Generate schedule only after rhythm is set.</p>
+    <dialog id="rhythmDialog" class="dialog-shell">
+      <div class="dialog-card">
+        <div class="dialog-header">
+          <div>
+            <h2>Daily Rhythm</h2>
+            <p class="dialog-copy">Tune wake and sleep times so suggestions sit inside your natural energy window.</p>
+          </div>
+          <button id="cancelRhythmBtn" class="ghost-icon" type="button" aria-label="Close rhythm">x</button>
         </div>
-        <div class="actions">
-          <button id="generateBtn">Generate week plan</button>
-          <button id="resetPlanBtn" class="ghost">Reset</button>
-          <button id="notifyBtn" class="ghost">Enable reminders</button>
-        </div>
-        <p id="progressSummary" class="progress"></p>
-      </section>
-
-      <section class="panel panel-wide">
-        <div class="panel-head">
-          <h2>📅 Weekly board</h2>
-        </div>
-        <div id="calendar" class="calendar"></div>
-      </section>
-    </main>
-
-    <template id="itemTemplate">
-      <li>
-        <div>
-          <span class="title"></span>
-          <span class="meta"></span>
-        </div>
-        <div class="item-actions"></div>
-      </li>
-    </template>
+        <form id="rhythmForm" class="dialog-form">
+          <div class="dialog-grid">
+            <label>
+              <span>Wake time</span>
+              <input id="rhythmWake" type="time" required />
+            </label>
+            <label>
+              <span>Sleep time</span>
+              <input id="rhythmSleep" type="time" required />
+            </label>
+          </div>
+          <button type="submit">Save rhythm</button>
+        </form>
+      </div>
+    </dialog>
 
     <script src="app.js"></script>
   </body>

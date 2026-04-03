@@ -1,20 +1,20 @@
-# Kanso Planner
+# FlowKanso Planner
 
-A Japanese-minimal weekly planner with Eisenhower Matrix and adaptive schedule generation.
+FlowKanso Planner is a lightweight browser planner focused on two ideas:
 
-## Improvements in this version
+- An Eisenhower-style drag-and-drop task matrix for quick prioritisation.
+- An adaptive daily timeline that keeps fixed commitments visible and can snap flexible tasks into free time.
 
-- Mandatory onboarding asks **wake time** and **sleep time** before users start planning.
-- Fixed commitments are now fully editable in UI (add, edit, delete).
-- UI/theme redesigned with a calm Japanese minimal palette and simple iconography.
-- Scheduler uses your daily rhythm to decide practical planning windows.
-- Matrix + recurring goals + weekly board + reminders + persistence.
+## Features
 
-## Run locally
+- Add flexible tasks with duration, deadline, urgency, and importance.
+- Drag tasks between Do First, Schedule, Delegate, and Eliminate.
+- Add, edit, and delete fixed commitments.
+- Set your wake and sleep rhythm to shape the active timeline window.
+- Mark scheduled flexible tasks as done and let Rhythm AI learn from completion times.
 
-```bash
-cd /workspace/John-Calendar
-python3 -m http.server 8000
-```
+## Files
 
-Open `http://localhost:8000`.
+- `index.html` contains the app structure.
+- `style.css` defines the FlowKanso visual system.
+- `app.js` handles state, drag and drop, scheduling, and rendering.
